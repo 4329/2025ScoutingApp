@@ -1,0 +1,393 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* General Styles */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #2b2b2b;
+	color: #FFFFFF;
+}
+
+.container {
+	width: 100%; /* Updated width to 100% */
+	margin: 0 auto;
+	padding-left: 0px; /* Ensure the container itself has a left padding of 0px */
+	box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+/* Header Styles */
+header {
+	background: #333;
+	color: #ffffff;
+	padding: 15px 0;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+	font-size: 2em;
+}
+
+/* Logo Styles */
+.logo {
+	width: 200px;
+	height: 200px;
+	display: block;
+	margin: 10px auto; /* Center the logo horizontally */
+}
+
+/* Navigation Styles */
+nav.selection-panel {
+	background: #444;
+	padding: 10px 0;
+	text-align: center;
+	z-index: 1;
+}
+
+nav.selection-panel ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav.selection-panel ul li {
+	display: inline;
+	margin: 0 15px;
+}
+
+nav.selection-panel ul li a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.2em;
+}
+
+nav.selection-panel ul li a:hover {
+	text-decoration: underline;
+}
+
+/* Section Styles */
+section {
+	padding: 20px 0;
+}
+
+section h2 {
+	text-align: center;
+	color: #ffffff;
+}
+
+section p {
+	text-align: center;
+	color: #ffffff;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	text-align: center;
+}
+
+ul li {
+	margin: 5px 0;
+}
+
+a {
+	color: #0066cc;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+main {
+	padding: 20px;
+}
+
+main section {
+	margin-bottom: 30px;
+}
+
+main h2 {
+	font-size: 1.5em;
+	color: #ffffff;
+}
+
+main p {
+	color: #ffffff;
+}
+
+/* Footer Styles */
+footer {
+	background: #333;
+	color: #ffffff;
+	padding: 10px 0;
+	text-align: center;
+}
+
+footer p {
+	margin: 0;
+}
+
+/* Button Styles */
+.button {
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	outline: none;
+	padding: 0;
+}
+
+.button-image {
+	width: 100px;
+	height: 100px;
+	border-radius: 10px;
+	transition: transform 0.3s ease;
+}
+
+.button-image:hover {
+	transform: scale(1.1);
+}
+
+/* Subtraction Button Styles */
+.button-text {
+	font-size: 1.5em;
+	color: #fff; /* Text color is white */
+	background-color: #007bff; /* Same blue as the save button */
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin: 10px;
+	transition: background-color 0.3s ease;
+}
+
+.button-text:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+}
+
+.login-field {
+	font-size: x-large;
+	margin: 10px;
+	padding: 10px;
+}
+
+.real-drop-shadow {
+	background: linear-gradient(#007bff, 80%, color-mix(in srgb, #007bff, #000 20%));
+}
+
+.select-button {
+	font-size: 1.5em;
+	color: #fff; /* Text color is white */
+	background-color: #007bff; /* Same blue as the save button */
+	transition: background-color 0.3s ease;
+	padding: 10px;
+	margin: 10px;
+}
+
+.select-option {
+	font-size: 1.5em;
+	color: #fff; /* Text color is white */
+	background-color: #007bff; /* Same blue as the save button */
+	border: none;
+	transition: background-color 0.3s ease;
+	padding: 10px;
+}
+
+.select-option:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Button Container Styles */
+.button-container {
+	display: flex;
+	align-items: center;
+	margin: 20px 0; /* Vertical margin for spacing between rows */
+	padding-left: 20px; /* Ensure the button container has a left padding of 20px */
+	box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+/* Counter Container Styles */
+.counter-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start; /* Align counter and title to the left */
+	margin-right: 30px; /* Increase space between counter and button */
+	background-color: #333333;
+}
+
+/* Title Styles */
+.title {
+	font-size: 1.2em;
+	color: #ffffff;
+	margin-top: 10px; /* Space between counter and title */
+}
+.title-switch {
+	font-size: 1.2em;
+	color: #ffffff;
+	margin-right: 10px; /* Space between counter and title */
+}
+
+/* Counter Styles */
+.counter {
+	font-size: 3em;
+	color: #ffffff;
+	font-weight: bold;
+	width: auto;
+}
+
+/* Save Button Styles */
+.save-button {
+	margin-top: 20px;
+	padding: 10px 20px;
+	font-size: 1.2em;
+	color: #fff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+	background-color: #0056b3;
+}
+
+/* Dropdown Styles */
+.dropdown {
+	position: relative;
+	display: inline-block;
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-right: 15px; /* Space between dropdowns */
+}
+
+.dropdown-title {
+	font-size: 1em;
+	color: #666;
+	margin-bottom: 5px; /* Space between title and button */
+}
+
+.dropdown-button {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+	background-color: #0056b3;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+	border-radius: 5px;
+	margin-top: 5px;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #f1f1f1;
+}
+
+.dropdown.show .dropdown-content {
+	display: block;
+}
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: #2196F3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
+input {
+	background-color: #333333;
+}
+
+.notification {
+	padding: 100px;
+	background-color: #ee0b0b;
+	border-radius: 5px 0 0 0;
+	transition: opacity 0.5s ease-in;
+	font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 60000;
+	font-weight:bold;
+}
+
+.QRModal {
+	z-index: 100;
+	background-color: #333;
+	color: #FFF;
+}
+
+.QROverlay {
+}
