@@ -36,7 +36,7 @@ export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 					<option value="deep">Deep Cage</option>
 					<option value="shallow">Shallow Cage</option>
 				</Dropdown>
-				<input type="hidden" value={endgame} />
+				<input type="hidden" name="Climb" value={endgame} />
 				<div className="h-56" />
 				<ImageSwitch current={endgame} />
 

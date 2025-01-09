@@ -38,6 +38,11 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 
 					case "hidden":
 					case "text":
+						if (tmp[i].value == "") {
+							runNotification(`${tmp[i].name} has no data`, "/uncooldog.gif");
+							setData({});
+							return;
+						}
 						out.push(tmp[i].value);
 					break;
 				}
