@@ -62,18 +62,17 @@ export default function ScoutingApp() {
 			setTeamState(x[0] as teams);
 		});
 	}, [matchNum]);
+	const [scouterid, setScouterid] = useState<number | undefined>();
     const [teamNum, setTeamNum] = useState<string>("");
 
-
-	//less ugly way to do this?
-	const resetTeamNum = useRef(false);
 	useEffect(() => {
-		resetTeamNum.current = true
-	}, [matchNum]);
+		if (scouterid)
+			setTeamNum(teamState.blue_nums.concat(teamState.red_nums)[scouterid] + "");
+	}, [scouterid, matchNum])
 
 	const [initial, setInitial] = useState<state>({} as state);
 	useEffect(() => {
-		if (teamNum) {
+		if (matchNum && teamNum) {
 			dataSource.getData(matchNum, teamNum).then(x => {
 				if (x && x[0]) setInitial(x[0] as state);
 				else setInitial({} as state);
@@ -99,15 +98,27 @@ export default function ScoutingApp() {
 			
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">
-				<Dropdown name="Match Number" setMatchNum={setMatchNum}>
-					{matchState.map((x: QueryResultRow) => <option value={x.match_num} key={x.match_num}>{x.match_num}</option>)}
-				</Dropdown>
+				<div className="flex flex-col">
+					<div className="title mx-10">Match Num</div>
+					<Dropdown name="Match Number" setMatchNum={setMatchNum}>
+						{matchState.map((x: QueryResultRow) => <option value={x.match_num} key={x.match_num}>{x.match_num}</option>)}
+					</Dropdown>
+				</div>
 
-				<Dropdown name="Team Number" setMatchNum={setTeamNum} ack={resetTeamNum}>
-					{teamState.blue_nums.concat(teamState.red_nums).map((x: number) => {
-						return <option value={x} key={x}>{x}</option>
-					})}
-				</Dropdown>
+				<div className="flex flex-col">
+					<div className="title mx-10">Scouter Id</div>
+					<div className="flex items-center">
+						<Dropdown name="Scouter Id" setMatchNum={setScouterid}>
+							{[0, 1, 2, 3, 4, 5].map((_: number, i: number) => {
+								return <option value={i} key={i}>{i + 1}</option>
+							})}
+						</Dropdown>
+						{scouterid ?
+							<div className="title !mt-9">{teamState.blue_nums.concat(teamState.red_nums)[scouterid]}</div>
+								: <></>
+						}
+					</div>
+				</div>
 			</div>
 			<ScoutingForm matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
         </>
