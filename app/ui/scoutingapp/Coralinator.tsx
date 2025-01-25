@@ -31,12 +31,12 @@ function ButtonThing({current, set, name, pos}: {current: number, set: Dispatch<
 			left: pos[0],
 			top: pos[1],
 		}}>
-			<div className="grid grid-cols-3 w-[300px]">
-				<button className="button-text" type="button" onClick={() => set(current + 1)}>{name}</button>
-				<button className="button-text" type="button" onClick={() => {
+			<div className="flex  w-[300px]">
+				<button className="button-text !mx-1" type="button" onClick={() => set(current + 1)}>{name}</button>
+				<button className="button-text !mx-0" type="button" onClick={() => {
 					if (current > 0) set(current - 1)
 				}}>-{1}</button>
-				<input className="text-4xl" type="text" value={current} readOnly />
+				<input className="text-6xl px-1 mx-3" type="text" value={current} readOnly />
 			</div>
 		</div>
 	)
