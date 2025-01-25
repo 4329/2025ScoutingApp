@@ -5,6 +5,8 @@ import Chart from "react-google-charts";
 import Dropdown from "../ui/Dropdown";
 import NavPanel from "../ui/NavPanel";
 import TeamChecks from "../ui/data-viewer/team-checks";
+import * as XLSX from 'xlsx/xlsx.mjs';
+import { getData, getMatches } from "../lib/getter";
 
 export default function Page() {
     const [teams, setTeams]: any = useState({ "57": { "test": "9" } });
@@ -95,6 +97,14 @@ export default function Page() {
             </div >
             <div className="m-4" />
             <TeamChecks teamList={teams} removals={removals} setRemovals={setRemovals} />
+			<button className="button-text" onClick={() => {
+				getMatches().then((x) => {
+					var workbook = XLSX.utils.book_new();
+					var table = XLSX.utils.json_to_sheet(x, {});
+					XLSX.utils.book_append_sheet(workbook, table, "data");
+					XLSX.writeFile(workbook, "data.xlsb");
+				});
+			}}>Export to .xlsx</button>
         </>
     )
 }
