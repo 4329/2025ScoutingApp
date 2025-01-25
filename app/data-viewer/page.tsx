@@ -101,8 +101,8 @@ export default function Page() {
 				getMatches().then((x) => {
 					var workbook = XLSX.utils.book_new();
 					var table = XLSX.utils.json_to_sheet(x, {});
-					XLSX.utils.book_append_sheet(workbook, table, "Yep");
-					XLSX.writeFile(workbook, "yep.xlsb");
+					XLSX.utils.book_append_sheet(workbook, table, "data");
+					XLSX.writeFile(workbook, "data.xlsb");
 				});
 			}}>Export to .xlsx</button>
         </>
