@@ -20,6 +20,28 @@ export default function Qrcode() {
 	const ack = useRef(false);
 	const ack2 = useRef(false);
 
+	const keys = [
+		"is_red",
+		"leave",
+		"auto_l1",
+		"auto_l2",
+		"auto_l3",
+		"auto_l4",
+		"auto_processor",
+		"auto_net",
+
+		"teleop_l1",
+		"teleop_l2",
+		"teleop_l3",
+		"teleop_l4",
+		"teleop_processor",
+		"teleop_net",
+
+		"park",
+		"deep_cage",
+		"shallow_cage",
+	];
+
 	return (
 		<>
 			<NavPanel />
@@ -69,14 +91,15 @@ export default function Qrcode() {
 				}/>
 			</main>
 			<button className="button-text" onClick={() => Object.keys(qrData).map((x: any) => Object.keys(qrData[x]).map((y: any) => {
-				let nonsense = Object.values(qrData[x][y]).map(z => {
-					switch (z) {
+				let nonsense = keys.map(k => {
+					switch (qrData[x][y][k]) {
 						case true: return "TRUE";
 						case false: return "FALSE";
 						case undefined: return "undefined";
-						default: return x;
+						default: return qrData[x][y][k];
 					}
 				});
+				console.log([x, y].concat(nonsense));
 				publish([x, y].concat(nonsense).concat("undefined"));
 			}))}>Upload</button>
 		</>
@@ -86,29 +109,11 @@ export default function Qrcode() {
 		const data = JSON.parse(result);
 		let newData = {...qrData};
 		newData[data[0]] = qrData[data[0]] ?? {};
+
 		let out: any = {};
-		const keys = [
-			"leave",
-			"auto_l1",
-			"auto_l2",
-			"auto_l3",
-			"auto_l4",
-			"auto_processor",
-			"auto_net",
-
-			"teleop_l1",
-			"teleop_l2",
-			"teleop_l3",
-			"teleop_l4",
-			"teleop_processor",
-			"teleop_net",
-
-			"park",
-			"deep_cage",
-			"shallow_cage",
-		];
 		keys.map((x, i) => out[x] = data[i + 2]);
 		newData[data[0]][data[1]] = out;
+
 		setQrData(newData);
 		console.log(newData);
 	}
