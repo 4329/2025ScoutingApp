@@ -7,13 +7,9 @@ import { Dispatch, MutableRefObject, useEffect, useRef, useState } from "react";
 import { getAllPossibilities } from "../lib/getter";
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import ScoutingForm from "../ui/scoutingapp/ScoutingForm"
-import Modal from "react-modal";
-import { QRCodeSVG } from "qrcode.react";
-import { Scanner } from "@yudiel/react-qr-scanner";
-import useNetworkStatus from "../lib/useNetworkStatus";
-import { DataSource, NetworkSource, NothingSource, QRCodeSource } from "../lib/dataSource";
+import { DataSource, NetworkSource, NothingSource } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
-import { state, teams } from "../lib/match";
+import { scoreToState, state, teams } from "../lib/match";
 
 export default function ScoutingApp() {
 	const [dataSource, setDataSource] = useState<DataSource>(new NetworkSource());
@@ -49,8 +45,15 @@ export default function ScoutingApp() {
 	useEffect(() => {
 		if (matchNum && teamNum) {
 			dataSource.getData(matchNum, teamNum).then(x => {
-				if (x && x[0]) setInitial(x[0] as state);
-				else setInitial({} as state);
+				if (x && x[0]) {
+					Object.keys(x[0])
+						.filter(y => !["match_num", "team_num", "is_red"].includes(y))
+						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
+					console.log(x[0]);
+					setInitial(x[0] as state);
+				} else {
+					setInitial({} as state);
+				}
 			})
 		}
 	}, [teamNum]);
