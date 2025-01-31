@@ -3,11 +3,11 @@ import { publish } from "@/app/lib/publisher";
 import CoolSwitch from "./CoolSwitch";
 import ImageCrementor from "./ImageCrementor";
 import { useFormStatus } from "react-dom";
-import { state } from "@/app/scoutingapp/page";
 import Modal from "react-modal"
 import { QRCodeSVG } from "qrcode.react";
 import { useRef, useState } from "react";
 import { ScoutingDataInputter } from "./ScoutingDataInputter";
+import { state } from "@/app/lib/match";
 
 export default function ScoutingForm({matchNum, teamNum, teamState, initialStates}: {matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state}) {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -24,16 +24,29 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 
 	return (
 		<form onSubmit={(e) => {
+
+			if (!matchNum || !teamNum) {
+				if (!matchNum) runNotification("Please enter a match number","/uncooldog.gif")
+				else runNotification("Please enter a team number","/uncooldog.gif");
+
+				setData({});
+				return;
+			}
+
 			e.preventDefault()
 			const tmp: any = e.target;
 
-			let out: string[] = [matchNum, teamNum, teamState.red_nums.includes(parseInt(teamNum)) ? "TRUE" : "FALSE"];
+			let out: any = {
+				match_num: matchNum,
+				team_num: teamNum,
+				is_red: teamState.red_nums.includes(parseInt(teamNum))
+			}
 
 			//array.map doesn't appear to exist...
 			for (let i = 0; i < tmp.length; i++) {
 				switch (tmp[i].type) {
 					case "checkbox":
-						out.push(tmp[i].value == 1 ? "TRUE" : "FALSE");
+						out[tmp[i].id] = tmp[i].checked ? 1 : 0;
 					break;
 
 					case "hidden":
@@ -45,19 +58,9 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 						} else if (tmp[i].id == "hidden") {
 							break;
 						}
-						out.push(tmp[i].value);
+						out[tmp[i].id] = tmp[i].value;
 					break;
 				}
-			}
-			console.log(out);
-
-
-			if (out.includes("")) {
-				if (!out[0]) runNotification("Please enter a match number","/uncooldog.gif")
-				else runNotification("Please enter a team number","/uncooldog.gif");
-
-				setData({});
-				return;
 			}
 
 			if ((e.nativeEvent as any).submitter.name == "submit") {

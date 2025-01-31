@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Dispatch, useState } from "react";
 
-export default function Coralinator({title, scores}: {title: string, scores: number[]}) {
+export default function Coralinator({title, type}: {title: string, type: string}) {
 	const [l1, setL1] = useState(0);
 	const [l2, setL2] = useState(0);
 	const [l3, setL3] = useState(0);
@@ -11,20 +11,19 @@ export default function Coralinator({title, scores}: {title: string, scores: num
 		<div className="m-10">
 			<div className="title">{title}</div>
 			<div className="grid grid-cols-2 w-40 relative">
-				<ButtonThing current={l1} set={setL1} name="L1" pos={[175, 290]} scale={scores[0]} />
-				<ButtonThing current={l2} set={setL2} name="L2" pos={[175, 210]} scale={scores[1]} />
-				<ButtonThing current={l3} set={setL3} name="L3" pos={[175, 124]} scale={scores[2]} />
-				<ButtonThing current={l4} set={setL4} name="L4" pos={[175, -10]} scale={scores[3]} />
+				<ButtonThing current={l1} type={type} set={setL1} name="L1" pos={[175, 290]} />
+				<ButtonThing current={l2} type={type} set={setL2} name="L2" pos={[175, 210]} />
+				<ButtonThing current={l3} type={type} set={setL3} name="L3" pos={[175, 124]} />
+				<ButtonThing current={l4} type={type} set={setL4} name="L4" pos={[175, -10]} />
 			</div>
 			<div className="w-[300px] h-300px">
 				<Image className="mb-5" src="/coral.png" width={300} height={300} alt="coral" priority={true} />
 			</div>
-			<input id="counter1" className="text-white text-6xl !w-[400px] pointer-events-none" value={l1 * scores[0] + l2 * scores[1] + l3 * scores[2] + l4 * scores[3]} type="hidden" readOnly tabIndex={-1}></input>
 		</div>
 	)
 }
 
-function ButtonThing({current, scale, set, name, pos}: {current: number, scale: number, set: Dispatch<number>, name: string, pos: number[]}) {
+function ButtonThing({current, type, set, name, pos}: {current: number, type: string, set: Dispatch<number>, name: string, pos: number[]}) {
 	return (
 		<div style={{
 			position: "absolute",
@@ -36,8 +35,7 @@ function ButtonThing({current, scale, set, name, pos}: {current: number, scale: 
 				<button className="button-text !mx-0" type="button" onClick={() => {
 					if (current > 0) set(current - 1)
 				}}>-1</button>
-				<input id="hidden" className="text-6xl px-1 mx-3" type="text" value={current} readOnly />
-				<input type="hidden" value={current * scale} />
+				<input id={`${type}_${name.toLowerCase()}`} className="text-6xl px-1 mx-3" type="text" value={current} readOnly />
 			</div>
 		</div>
 	)

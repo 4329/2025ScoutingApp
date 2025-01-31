@@ -16,27 +16,30 @@ export async function checkTables() {
     await sql`
         CREATE TABLE IF NOT EXISTS matches (
             match_num int NOT NULL,
-            team_num int NOT NULL,
+            team_num text NOT NULL,
 			is_red bool,
 
-			auto_leave bool,
+			auto_leave int,
 			auto_l1 int,
 			auto_l2 int,
 			auto_l3 int,
 			auto_l4 int,
-			auto_coral int,
 			auto_processor int,
 			auto_net int,
+			auto_total int,
 
 			teleop_l1 int,
 			teleop_l2 int,
 			teleop_l3 int,
 			teleop_l4 int,
-			teleop_coral int,
 			teleop_processor int,
 			teleop_net int,
+			teleop_total int,
 
 			endgame endgame_style,
+			endgame_total int,
+
+			match_total int,
 
 			submitter_name text,
 

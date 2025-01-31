@@ -13,32 +13,7 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import useNetworkStatus from "../lib/useNetworkStatus";
 import { DataSource, NetworkSource, NothingSource, QRCodeSource } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
-
-export type teams = {
-	blue_nums: number[],
-	red_nums: number[]
-};
-
-export type state = {
-	"leave": boolean,
-	"auto_l1": number,
-	"auto_l2": number,
-	"auto_l3": number,
-	"auto_l4": number,
-	"auto_processor": number,
-	"auto_net": number,
-
-	"teleop_l1": number,
-	"teleop_l2": number,
-	"teleop_l3": number,
-	"teleop_l4": number,
-	"teleop_processor": number,
-	"teleop_net": number,
-
-	"park": boolean,
-	"deep_cage": boolean,
-	"shallow_cage": boolean,
-}
+import { state, teams } from "../lib/match";
 
 export default function ScoutingApp() {
 	const [dataSource, setDataSource] = useState<DataSource>(new NetworkSource());
