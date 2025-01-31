@@ -42,6 +42,8 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 							runNotification(`${tmp[i].name} has no data`, "/uncooldog.gif");
 							setData({});
 							return;
+						} else if (tmp[i].id == "hidden") {
+							break;
 						}
 						out.push(tmp[i].value);
 					break;
