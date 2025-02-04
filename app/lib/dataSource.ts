@@ -1,5 +1,4 @@
 import { QueryResultRow } from "@vercel/postgres";
-import { teams } from "../scoutingapp/page";
 import { getData, getMatchPossibilities, getTeams } from "./getter";
 
 export interface DataSource {

@@ -2,8 +2,10 @@ import Link from "next/link";
 import NavPanel from "./ui/NavPanel";
 import Image from "next/image"
 import { getTeams } from "./lib/actions";
+import { checkTables } from "./lib/seed";
 
 export default async function Home() {
+	checkTables();
 	return (
 		<>
 			<header>

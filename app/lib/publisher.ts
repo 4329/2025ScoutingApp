@@ -1,11 +1,36 @@
 "use server"
 
 import { sql } from "@vercel/postgres"
+import { state, stateToScore } from "./match";
 
-export async function publish(toPublish: string[]) {
-	let data = toPublish.reduce((a, b) => a + ", " + b);
-	console.log("data: " + data);
-	//hate this everything is the worst
+function sumSection(state: state, sectionName: string): number {
+	let total = 0;
+	for (let key of Object.keys(state)) {
+		if (!["match_num", "team_num", "is_red", "submitter_name"].includes(key) 
+			&& key.includes(sectionName) 
+			&& (state as any)[key]) {
+
+			total += parseInt(stateToScore(key, (state as any)[key]).toString());
+		}
+	}
+
+	return total;
+}
+
+export async function publish(toPublish: state) {
+	let sqled: any = {
+		endgame: toPublish.endgame
+	};
+	Object.entries(toPublish)
+		.filter(([k, _]) => !["endgame"].includes(k))
+		.map(([k, v]) => [k, stateToScore(k, v as string | number)])
+		.forEach(([k, v]) => sqled[k] = v);
+
+	sqled.match_total = sumSection(toPublish, "");
+	sqled.auto_total = sumSection(toPublish, "auto");
+	sqled.teleop_total = sumSection(toPublish, "teleop");
+	sqled.endgame_total = sumSection(toPublish, "endgame");
+
 	try {
 		await sql`
 		INSERT INTO matches (
@@ -18,40 +43,50 @@ export async function publish(toPublish: string[]) {
 			auto_l2,
 			auto_l3,
 			auto_l4,
-			auto_coral,
 			auto_processor,
 			auto_net,
+			auto_total,
 
 			teleop_l1,
 			teleop_l2,
 			teleop_l3,
 			teleop_l4,
-			teleop_coral,
 			teleop_processor,
 			teleop_net,
+			teleop_total,
 
-			endgame
+			endgame,
+			endgame_total,
+
+			match_total
 		)
+
 		VALUES (
-			${toPublish[0]},
-			${toPublish[1]},
-			${toPublish[2]},
-			${toPublish[3]},
-			${toPublish[4]},
-			${toPublish[5]},
-			${toPublish[6]},
-			${toPublish[7]},
-			${toPublish[8]},
-			${toPublish[9]},
-			${toPublish[10]},
-			${toPublish[11]},
-			${toPublish[12]},
-			${toPublish[13]},
-			${toPublish[14]},
-			${toPublish[15]},
-			${toPublish[16]},
-			${toPublish[17]},
-			${toPublish[18]}
+            ${sqled.match_num},
+            ${sqled.team_num},
+			${sqled.is_red},
+
+			${sqled.auto_leave},
+			${sqled.auto_l1},
+			${sqled.auto_l2},
+			${sqled.auto_l3},
+			${sqled.auto_l4},
+			${sqled.auto_processor},
+			${sqled.auto_net},
+			${sqled.auto_total},
+
+			${sqled.teleop_l1},
+			${sqled.teleop_l2},
+			${sqled.teleop_l3},
+			${sqled.teleop_l4},
+			${sqled.teleop_processor},
+			${sqled.teleop_net},
+			${sqled.teleop_total},
+
+			${sqled.endgame},
+			${sqled.endgame_total},
+
+			${sqled.match_total}
 		)
 		ON CONFLICT (match_num, team_num)
 		DO UPDATE SET 
@@ -64,19 +99,22 @@ export async function publish(toPublish: string[]) {
 			auto_l2 = EXCLUDED.auto_l2,
 			auto_l3 = EXCLUDED.auto_l3,
 			auto_l4 = EXCLUDED.auto_l4,
-			auto_coral = EXCLUDED.auto_coral,
 			auto_processor = EXCLUDED.auto_processor,
 			auto_net = EXCLUDED.auto_net,
+			auto_total = EXCLUDED.auto_total,
 
 			teleop_l1 = EXCLUDED.teleop_l1,
 			teleop_l2 = EXCLUDED.teleop_l2,
 			teleop_l3 = EXCLUDED.teleop_l3,
 			teleop_l4 = EXCLUDED.teleop_l4,
-			teleop_coral = EXCLUDED.teleop_coral,
 			teleop_processor = EXCLUDED.teleop_processor,
 			teleop_net = EXCLUDED.teleop_net,
+			teleop_total = EXCLUDED.teleop_total,
 
-			endgame = EXCLUDED.endgame
+			endgame = EXCLUDED.endgame,
+			endgame_total = EXCLUDED.endgame_total,
+
+			match_total = EXCLUDED.match_total
 		`;
 	} catch (err) {
 		console.log(JSON.stringify(err));

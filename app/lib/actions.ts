@@ -25,6 +25,7 @@ export async function populatePossibilitiesWithTBA(eventkey: string) {
 
 export async function populateTeamsWithTBA(eventKey: string) {
     const data = await getTBAEventTeams(eventKey);
+	console.log(data);
     data.forEach(async (x) => {
         await sql`
             INSERT INTO teams (team_num)

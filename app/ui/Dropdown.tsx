@@ -1,9 +1,19 @@
 "use client"
-import { Dispatch, MouseEventHandler, MutableRefObject, ReactElement, Reference, RefObject, SyntheticEvent, useState } from "react";
+import { Dispatch, MouseEventHandler, MutableRefObject, ReactElement, SyntheticEvent, useEffect, useState } from "react";
 
-export default function Dropdown({ className, name, children, setMatchNum, ack: rerender}: { className?: string, name: string, children?: Array<ReactElement<HTMLOptionElement>>, setMatchNum?: Dispatch<any>, ack?: MutableRefObject<boolean>}) {
+export default function Dropdown({ className, name, children, setMatchNum, rerender, initial}: { className?: string, name: string, children?: Array<ReactElement<HTMLOptionElement>>, setMatchNum?: Dispatch<any>, rerender?: MutableRefObject<boolean>, initial?: string}) {
 	const [dropped, setDropped]: [boolean, Dispatch<boolean>] = useState(false);
     let [disp, setDisp]: [string, Dispatch<string>] = useState(name);
+
+	useEffect(() => {
+		if (initial && children) {
+			let child = children[children.findIndex(x => x.props.value == initial)]
+			if (child) {
+				setDisp(child.props.children as any as string);
+				if (setMatchNum) setMatchNum(child.props.value);
+			}
+		}
+	}, [initial]);
 
 	if (rerender && rerender.current) {
 		rerender.current = false

@@ -16,6 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		async authorize(credentials: any) {
 			let admin = null;
 			admin = await getAdmin(credentials.email)
+			console.log("\n\n\n" + "admin: " + JSON.stringify(admin) + "\n\n\n");
 
 			if (!admin) throw new Error("Admin not find.");
 			if (!(await bcrypt.compare(credentials.password, admin.password))) throw new Error("Incorrect Pasword");

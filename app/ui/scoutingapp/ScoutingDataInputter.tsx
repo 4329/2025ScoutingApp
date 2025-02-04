@@ -1,10 +1,10 @@
-import { state } from "@/app/scoutingapp/page";
 import CoolSwitch from "./CoolSwitch";
 import ImageCrementor from "./ImageCrementor";
 import Image from "next/image";
-import { Dispatch, MutableRefObject, useState } from "react";
+import { useState } from "react";
 import Dropdown from "../Dropdown";
 import Coralinator from "./Coralinator";
+import { state } from "@/app/lib/match";
 
 export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 	const [endgame, setEndgame] = useState("");
@@ -13,30 +13,30 @@ export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 		<>
 			<section className="scroll-mt-6" id="auto">
 				<h2>Auto</h2>
-				<CoolSwitch className="p-10" title="Leave" initial={initialStates["leave"]} />
-				<Coralinator title="Auto Coral" scores={[3, 4, 6, 7]} />	
-				<ImageCrementor className="p-10" scale={6} src="/processor.jpg" title="Auto Processor" initial={initialStates["auto_processor"]} />
-				<ImageCrementor className="p-10" scale={4} src="/net.jpg" title="Auto Net" initial={initialStates["auto_net"]} />
+				<CoolSwitch className="p-10" id="auto_leave" title="Leave" initial={initialStates.auto_leave} />
+				<Coralinator title="Auto Coral" type="auto" initialStates={[initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]} />	
+				<ImageCrementor className="p-10" id="auto_processor" src="/processor.jpg" title="Auto Processor" initial={initialStates.auto_processor} />
+				<ImageCrementor className="p-10" id="auto_net" src="/net.jpg" title="Auto Net" initial={initialStates.auto_net} />
 			</section>
 
 			<section className="scroll-mt-6" id="teleop">
 				<h2>Teleop</h2>
-				<Coralinator title="Teleop Coral" scores={[2, 3, 4, 5]} />	
-				<ImageCrementor className="p-10" scale={6} src="/processor.jpg" title="Teleop Processor" initial={initialStates["teleop_processor"]} />
-				<ImageCrementor className="p-10" scale={4} src="/net.jpg" title="Teleop Net" initial={initialStates["teleop_net"]} />
+				<Coralinator title="Teleop Coral" type="teleop" initialStates={[initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]} />
+				<ImageCrementor className="p-10" id="teleop_processor" src="/processor.jpg" title="Teleop Processor" initial={initialStates.teleop_processor} />
+				<ImageCrementor className="p-10" id="teleop_net" src="/net.jpg" title="Teleop Net" initial={initialStates.teleop_net} />
 			</section>
 
 			<section className="scroll-mt-6" id="endgame">
 				<h2>Endgame</h2>
 
 				<div className="title mx-10">Climb</div>
-				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" name="Select Option">
+				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" name="Select Option" initial={initialStates.endgame?.toString()}>
 					<option value="nothing">Nothing</option>
 					<option value="park">Park</option>
-					<option value="deep">Deep Cage</option>
 					<option value="shallow">Shallow Cage</option>
+					<option value="deep">Deep Cage</option>
 				</Dropdown>
-				<input type="hidden" name="Climb" value={endgame} />
+				<input type="hidden" id="endgame" value={endgame} />
 				<div className="h-56" />
 				<ImageSwitch current={endgame} />
 
