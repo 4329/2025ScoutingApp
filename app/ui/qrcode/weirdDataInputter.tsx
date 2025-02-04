@@ -13,7 +13,7 @@ export default function WeirdDataInputter({onData}: {onData: Function}) {
 					case "insertText": {
 						const eventData = (e.nativeEvent as any).data
 						let newData = data + eventData;
-						if (eventData == ']') {
+						if (eventData == '}') {
 							try {
 								onData(newData);
 							} catch (e) {

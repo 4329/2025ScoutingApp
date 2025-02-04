@@ -17,8 +17,8 @@ export default function Qrcode() {
 	const [matchState, setMatchState] = useState<string>("");
 	const [teamState, setTeamState] = useState<string>("");
 
-	const ack = useRef(false);
-	const ack2 = useRef(false);
+	const rerender = useRef(false);
+	const rerender2 = useRef(false);
 
 	const keys = [
 		"is_red",
@@ -57,11 +57,11 @@ export default function Qrcode() {
 
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">
-				<Dropdown name="Match Number" setMatchNum={setMatchState} ack={ack}>
+				<Dropdown name="Match Number" setMatchNum={setMatchState} rerender={rerender}>
 					{Object.keys(qrData).map(x => <option value={x} key={x}>{x}</option>)}
 				</Dropdown>
 
-				<Dropdown name="Team Number" setMatchNum={setTeamState} ack={ack2}>
+				<Dropdown name="Team Number" setMatchNum={setTeamState} rerender={rerender2}>
 					{Object.keys(qrData[matchState] ?? {}).map((x: string) => {
 						return <option value={x} key={x}>{x}</option>
 					})}
@@ -76,8 +76,8 @@ export default function Qrcode() {
 							delete newData[matchState];
 						}
 
-						ack.current = true;
-						ack2.current = true;
+						rerender.current = true;
+						rerender2.current = true;
 						setQrData(newData);
 					}}>Delete Match</button>
 				</div>
@@ -90,18 +90,10 @@ export default function Qrcode() {
 						({} as state)
 				}/>
 			</main>
-			<button className="button-text" onClick={() => Object.keys(qrData).map((x: any) => Object.keys(qrData[x]).map((y: any) => {
-				let nonsense = keys.map(k => {
-					switch (qrData[x][y][k]) {
-						case true: return "TRUE";
-						case false: return "FALSE";
-						case undefined: return "undefined";
-						default: return qrData[x][y][k];
-					}
-				});
-				console.log([x, y].concat(nonsense));
-				publish([x, y].concat(nonsense).concat("undefined"));
-			}))}>Upload</button>
+			<button className="button-text" onClick={() => {
+
+				console.log(qrData);	
+			}}>Upload</button>
 		</>
 	);
 
