@@ -6,6 +6,7 @@ import QRModal from "../ui/ModalScanner";
 import WeirdDataInputter from "../ui/qrcode/weirdDataInputter";
 import { useEffect, useRef, useState } from "react";
 import { state } from "../lib/match";
+import { publish } from "../lib/publisher";
 
 
 export default function Qrcode() {
@@ -17,28 +18,6 @@ export default function Qrcode() {
 
 	const rerender = useRef(false);
 	const rerender2 = useRef(false);
-
-	const keys = [
-		"is_red",
-		"leave",
-		"auto_l1",
-		"auto_l2",
-		"auto_l3",
-		"auto_l4",
-		"auto_processor",
-		"auto_net",
-
-		"teleop_l1",
-		"teleop_l2",
-		"teleop_l3",
-		"teleop_l4",
-		"teleop_processor",
-		"teleop_net",
-
-		"park",
-		"deep_cage",
-		"shallow_cage",
-	];
 
 	return (
 		<>
@@ -89,22 +68,22 @@ export default function Qrcode() {
 				}/>
 			</main>
 			<button className="button-text" onClick={() => {
-
-				console.log(qrData);	
+				Object.values(qrData).map(x => Object.values(x as any).map((x: any) => {
+					console.log(x);
+					x.auto_leave = x.auto_leave ? 1 : 0;
+					publish(x as state)
+				}));
 			}}>Upload</button>
 		</>
 	);
 
 	function parseData(result: string) {
+		const newData = {...qrData};
 		const data = JSON.parse(result);
-		let newData = {...qrData};
-		newData[data[0]] = qrData[data[0]] ?? {};
 
-		let out: any = {};
-		keys.map((x, i) => out[x] = data[i + 2]);
-		newData[data[0]][data[1]] = out;
+		newData[data.match_num] ??= {};
+		newData[data.match_num][data.team_num] = data;
 
 		setQrData(newData);
-		console.log(newData);
 	}
 }

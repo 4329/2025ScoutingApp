@@ -24,6 +24,7 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 
 	return (
 		<form onSubmit={(e) => {
+			e.preventDefault()
 
 			if (!matchNum || !teamNum) {
 				if (!matchNum) runNotification("Please enter a match number","/uncooldog.gif")
@@ -33,7 +34,6 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 				return;
 			}
 
-			e.preventDefault()
 			const tmp: any = e.target;
 
 			let out: any = {

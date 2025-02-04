@@ -31,6 +31,8 @@ export async function publish(toPublish: state) {
 	sqled.teleop_total = sumSection(toPublish, "teleop");
 	sqled.endgame_total = sumSection(toPublish, "endgame");
 
+	console.log(sqled);
+
 	try {
 		await sql`
 		INSERT INTO matches (
