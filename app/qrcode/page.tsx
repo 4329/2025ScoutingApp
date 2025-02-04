@@ -1,13 +1,11 @@
 "use client"
 import NavPanel from "../ui/NavPanel";
 import { ScoutingDataInputter } from "../ui/scoutingapp/ScoutingDataInputter";
-import { state } from "../scoutingapp/page";
 import Dropdown from "../ui/Dropdown";
 import QRModal from "../ui/ModalScanner";
 import WeirdDataInputter from "../ui/qrcode/weirdDataInputter";
 import { useEffect, useRef, useState } from "react";
-import { publish } from "../lib/publisher";
-import { match } from "assert";
+import { state } from "../lib/match";
 
 
 export default function Qrcode() {
