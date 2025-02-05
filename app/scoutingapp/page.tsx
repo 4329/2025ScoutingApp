@@ -12,6 +12,7 @@ import Possibilities from "../ui/scoutingapp/Possibilities";
 import { scoreToState, state, teams } from "../lib/match";
 
 export default function ScoutingApp() {
+
 	const [dataSource, setDataSource] = useState<DataSource>(new NetworkSource());
 	useEffect(() => {
 		addEventListener("online", () => setDataSource(new NetworkSource()));
@@ -42,6 +43,7 @@ export default function ScoutingApp() {
 	}, [scouterid, matchNum])
 
 	const [initial, setInitial] = useState<state>({} as state);
+
 	useEffect(() => {
 		if (matchNum && teamNum) {
 			dataSource.getData(matchNum, teamNum).then(x => {
@@ -49,14 +51,13 @@ export default function ScoutingApp() {
 					Object.keys(x[0])
 						.filter(y => !["match_num", "team_num", "is_red"].includes(y))
 						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
-					console.log(x[0]);
 					setInitial(x[0] as state);
 				} else {
 					setInitial({} as state);
 				}
 			})
 		}
-	}, [teamNum]);
+	}, [teamNum, matchNum]);
 
 	return (
         <>

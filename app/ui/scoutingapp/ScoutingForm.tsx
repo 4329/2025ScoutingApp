@@ -5,7 +5,7 @@ import ImageCrementor from "./ImageCrementor";
 import { useFormStatus } from "react-dom";
 import Modal from "react-modal"
 import { QRCodeSVG } from "qrcode.react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScoutingDataInputter } from "./ScoutingDataInputter";
 import { state } from "@/app/lib/match";
 
@@ -14,7 +14,6 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 	const [data, setData] = useState({});
 	const [notification, setNotification] = useState("");
 	const [gif, setGif] = useState("");
-
 
 	function runNotification(text: string, gif: string) {
 		setNotification(text);
