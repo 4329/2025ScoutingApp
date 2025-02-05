@@ -9,7 +9,6 @@ export async function getTBAMatchData(eventkey: string) {
 }
 
 export async function getTBAEventTeams(eventKey: string) {
-	console.log(await getTBA(`https://www.thebluealliance.com/api/v3/event/${eventKey}/teams`))
     return await getTBA(`https://www.thebluealliance.com/api/v3/event/${eventKey}/teams`);
 }
 

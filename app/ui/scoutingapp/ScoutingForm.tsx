@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useRef, useState } from "react";
 import { ScoutingDataInputter } from "./ScoutingDataInputter";
 import { state } from "@/app/lib/match";
+import { formAtData } from "@/app/lib/form";
 
 export default function ScoutingForm({matchNum, teamNum, teamState, initialStates}: {matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state}) {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -23,43 +24,21 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 
 	return (
 		<form onSubmit={(e) => {
-			e.preventDefault()
+			e.preventDefault();
 
 			if (!matchNum || !teamNum) {
 				if (!matchNum) runNotification("Please enter a match number","/uncooldog.gif")
-				else runNotification("Please enter a team number","/uncooldog.gif");
+					else runNotification("Please enter a team number","/uncooldog.gif");
 
 				setData({});
 				return;
 			}
 
-			const tmp: any = e.target;
+			let out = formAtData(e, matchNum, teamNum, teamState.red_nums.includes(parseInt(teamNum)));
 
-			let out: any = {
-				match_num: matchNum,
-				team_num: teamNum,
-				is_red: teamState.red_nums.includes(parseInt(teamNum))
-			}
-
-			//array.map doesn't appear to exist...
-			for (let i = 0; i < tmp.length; i++) {
-				switch (tmp[i].type) {
-					case "checkbox":
-						out[tmp[i].id] = tmp[i].checked ? 1 : 0;
-					break;
-
-					case "hidden":
-					case "text":
-						if (tmp[i].value == "") {
-							runNotification(`${tmp[i].name} has no data`, "/uncooldog.gif");
-							setData({});
-							return;
-						} else if (tmp[i].id == "hidden") {
-							break;
-						}
-						out[tmp[i].id] = tmp[i].value;
-					break;
-				}
+			if (!out.match_num) {
+				runNotification(`${out} has no data`, "/uncooldog.gif");
+				setData({});
 			}
 
 			if ((e.nativeEvent as any).submitter.name == "submit") {

@@ -7,6 +7,8 @@ import WeirdDataInputter from "../ui/qrcode/weirdDataInputter";
 import { useEffect, useRef, useState } from "react";
 import { state } from "../lib/match";
 import { publish } from "../lib/publisher";
+import { formAtData } from "../lib/form";
+import { match } from "assert";
 
 
 export default function Qrcode() {
@@ -18,6 +20,15 @@ export default function Qrcode() {
 
 	const rerender = useRef(false);
 	const rerender2 = useRef(false);
+
+	const [notification, setNotification] = useState("");
+	const [gif, setGif] = useState("");
+
+	function runNotification(text: string, gif: string) {
+		setNotification(text);
+		setGif(gif);
+		setTimeout(() => setNotification(""), 5000);
+	}
 
 	return (
 		<>
@@ -61,11 +72,28 @@ export default function Qrcode() {
 			</div>
 
 			<main>
-				<ScoutingDataInputter initialStates={
-					qrData[matchState] && qrData[matchState][teamState] ?
-						qrData[matchState][teamState] :
-						({} as state)
-				}/>
+				<form onSubmit={(e) => {
+					e.preventDefault();
+					console.log("asdfasfd");
+					if (!matchState || !teamState) {
+						if (!matchState) runNotification("Please enter a match number","/uncooldog.gif")
+						else runNotification("Please enter a team number","/uncooldog.gif");
+
+						return;
+					}
+
+					let out = formAtData(e, matchState, teamState, qrData[matchState][teamState].is_red);
+					let newData = {...qrData};
+					newData[matchState][teamState] = out;
+					setQrData(newData);
+				}}>
+					<ScoutingDataInputter initialStates={
+						qrData[matchState] && qrData[matchState][teamState] ?
+							qrData[matchState][teamState] :
+							({} as state)
+					}/>
+					<button className="button-text" type="submit" name="submit">Update this match specifically</button>
+				</form>
 			</main>
 			<button className="button-text" onClick={() => {
 				Object.values(qrData).map(x => Object.values(x as any).map((x: any) => {
@@ -74,6 +102,14 @@ export default function Qrcode() {
 					publish(x as state)
 				}));
 			}}>Upload</button>
+			{
+				notification ?
+					<div className="notification fixed bottom-0 right-0 z-10 text-4xl">
+						{notification}
+						<a href = {gif}><img src = {gif}></img></a>
+					</div> :
+					""
+			}
 		</>
 	);
 
