@@ -72,9 +72,8 @@ export default function Qrcode() {
 			</div>
 
 			<main>
+			e.preventDefault();
 				<form onSubmit={(e) => {
-					e.preventDefault();
-					console.log("asdfasfd");
 					if (!matchState || !teamState) {
 						if (!matchState) runNotification("Please enter a match number","/uncooldog.gif")
 						else runNotification("Please enter a team number","/uncooldog.gif");
@@ -92,16 +91,16 @@ export default function Qrcode() {
 							qrData[matchState][teamState] :
 							({} as state)
 					}/>
-					<button className="button-text" type="submit" name="submit">Update this match specifically</button>
+					<button className="button-text" type="submit" name="submit">Update (not upload) this match specifically</button>
+					<button className="button-text" type="button" onClick={() => {
+						Object.values(qrData).map(x => Object.values(x as any).map((x: any) => {
+							console.log(x);
+							x.auto_leave = x.auto_leave ? 1 : 0;
+							publish(x as state)
+						}));
+					}}>Upload</button>
 				</form>
 			</main>
-			<button className="button-text" onClick={() => {
-				Object.values(qrData).map(x => Object.values(x as any).map((x: any) => {
-					console.log(x);
-					x.auto_leave = x.auto_leave ? 1 : 0;
-					publish(x as state)
-				}));
-			}}>Upload</button>
 			{
 				notification ?
 					<div className="notification fixed bottom-0 right-0 z-10 text-4xl">
