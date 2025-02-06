@@ -14,10 +14,10 @@ import { scoreToState, state, teams } from "../lib/match";
 export default function ScoutingApp() {
 
 	const [dataSource, setDataSource] = useState<DataSource>(new NetworkSource());
-	//useEffect(() => {
-	//	addEventListener("online", () => setDataSource(new NetworkSource()));
-	//	addEventListener("offline", () => setDataSource(new NothingSource()));
-	//}, [])
+	useEffect(() => {
+		addEventListener("online", () => setDataSource(new NetworkSource()));
+		addEventListener("offline", () => setDataSource(new NothingSource()));
+	}, [])
 
 	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
 	const [matchNum, setMatchNum] = useState<string>("");
