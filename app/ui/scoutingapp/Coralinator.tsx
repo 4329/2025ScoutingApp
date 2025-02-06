@@ -2,17 +2,17 @@ import { init } from "next/dist/compiled/webpack/webpack";
 import Image from "next/image";
 import { Dispatch, useEffect, useState } from "react";
 
-export default function Coralinator({title, type, initialStates}: {title: string, type: string, initialStates: number[]}) {
+export default function Coralinator({title, type, initialStates}: {title: string, type: string, initialStates: number[] | string[]}) {
 	const [l1, setL1] = useState(0);
 	const [l2, setL2] = useState(0);
 	const [l3, setL3] = useState(0);
 	const [l4, setL4] = useState(0);
 
 	useEffect(() => {
-		setL1(initialStates[0] ?? 0);
-		setL2(initialStates[1] ?? 0);
-		setL3(initialStates[2] ?? 0);
-		setL4(initialStates[3] ?? 0);
+		setL1(parseInt((initialStates[0] ?? 0) + ""));
+		setL2(parseInt((initialStates[1] ?? 0) + ""));
+		setL3(parseInt((initialStates[2] ?? 0) + ""));
+		setL4(parseInt((initialStates[3] ?? 0) + ""));
 	}, [initialStates]);
 
 	return (

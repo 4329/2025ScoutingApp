@@ -35,6 +35,7 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 			}
 
 			let out = formAtData(e, matchNum, teamNum, teamState.red_nums.includes(parseInt(teamNum)));
+			console.log(out);
 
 			if (!out.match_num) {
 				runNotification(`${out} has no data`, "/uncooldog.gif");

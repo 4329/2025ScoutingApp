@@ -4,11 +4,10 @@ import { ScoutingDataInputter } from "../ui/scoutingapp/ScoutingDataInputter";
 import Dropdown from "../ui/Dropdown";
 import QRModal from "../ui/ModalScanner";
 import WeirdDataInputter from "../ui/qrcode/weirdDataInputter";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { state } from "../lib/match";
 import { publish } from "../lib/publisher";
 import { formAtData } from "../lib/form";
-import { match } from "assert";
 
 
 export default function Qrcode() {
@@ -72,8 +71,9 @@ export default function Qrcode() {
 			</div>
 
 			<main>
-			e.preventDefault();
 				<form onSubmit={(e) => {
+					e.preventDefault();
+
 					if (!matchState || !teamState) {
 						if (!matchState) runNotification("Please enter a match number","/uncooldog.gif")
 						else runNotification("Please enter a team number","/uncooldog.gif");
@@ -86,15 +86,14 @@ export default function Qrcode() {
 					newData[matchState][teamState] = out;
 					setQrData(newData);
 				}}>
-					<ScoutingDataInputter initialStates={
-						qrData[matchState] && qrData[matchState][teamState] ?
-							qrData[matchState][teamState] :
-							({} as state)
-					}/>
+
+					<ScoutingDataInputter initialStates={qrData[matchState] && qrData[matchState][teamState] ?
+						qrData[matchState][teamState] :
+						({} as state)}/>
+
 					<button className="button-text" type="submit" name="submit">Update (not upload) this match specifically</button>
 					<button className="button-text" type="button" onClick={() => {
 						Object.values(qrData).map(x => Object.values(x as any).map((x: any) => {
-							console.log(x);
 							x.auto_leave = x.auto_leave ? 1 : 0;
 							publish(x as state)
 						}));

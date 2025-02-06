@@ -8,11 +8,12 @@ import { state } from "@/app/lib/match";
 
 export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 	const [endgame, setEndgame] = useState("");
-	const auto_corals = useRef([initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]);
-	const teleop_corals = useRef([initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]);
+	const [auto_corals, setAuto_corals] = useState([initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]);
+	const [teleop_corals, setTeleop_corals] = useState([initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]);
+
 	useEffect(() => {
-		auto_corals.current = [initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4];
-		teleop_corals.current = [initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4];
+		setAuto_corals([initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]);
+		setTeleop_corals([initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]);
 	}, [initialStates])
 
 	return (
@@ -20,14 +21,14 @@ export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 			<section className="scroll-mt-6" id="auto">
 				<h2>Auto</h2>
 				<CoolSwitch className="p-10" id="auto_leave" title="Leave" initial={initialStates.auto_leave} />
-				<Coralinator title="Auto Coral" type="auto" initialStates={auto_corals.current} />	
+				<Coralinator title="Auto Coral" type="auto" initialStates={auto_corals} />	
 				<ImageCrementor className="p-10" id="auto_processor" src="/processor.jpg" title="Auto Processor" initial={initialStates.auto_processor} />
 				<ImageCrementor className="p-10" id="auto_net" src="/net.jpg" title="Auto Net" initial={initialStates.auto_net} />
 			</section>
 
 			<section className="scroll-mt-6" id="teleop">
 				<h2>Teleop</h2>
-				<Coralinator title="Teleop Coral" type="teleop" initialStates={teleop_corals.current} />
+				<Coralinator title="Teleop Coral" type="teleop" initialStates={teleop_corals} />
 				<ImageCrementor className="p-10" id="teleop_processor" src="/processor.jpg" title="Teleop Processor" initial={initialStates.teleop_processor} />
 				<ImageCrementor className="p-10" id="teleop_net" src="/net.jpg" title="Teleop Net" initial={initialStates.teleop_net} />
 			</section>

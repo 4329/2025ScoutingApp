@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image"
 
-export default function ImageCrementor({className, src, alt, id, title, initial}: {className: string, src: string, alt?: string, id: string, title: string, initial: number | undefined}) {
+export default function ImageCrementor({className, src, alt, id, title, initial}: {className: string, src: string, alt?: string, id: string, title: string, initial: number | string | undefined}) {
     const [count, setCount] = useState<number>(0);
 
 	useEffect(() => {
-		setCount(initial ?? 0)
+		setCount(parseInt((initial ?? 0) + ""));
 	}, [initial])
 
     //every time I use currying I feel so smart it's amazing
