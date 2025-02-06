@@ -14,18 +14,19 @@ import { scoreToState, state, teams } from "../lib/match";
 export default function ScoutingApp() {
 
 	const [dataSource, setDataSource] = useState<DataSource>(new NetworkSource());
-	useEffect(() => {
-		addEventListener("online", () => setDataSource(new NetworkSource()));
-		addEventListener("offline", () => setDataSource(new NothingSource()));
-	}, [])
+	//useEffect(() => {
+	//	addEventListener("online", () => setDataSource(new NetworkSource()));
+	//	addEventListener("offline", () => setDataSource(new NothingSource()));
+	//}, [])
 
 	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
+	const [matchNum, setMatchNum] = useState<string>("");
 	useEffect(() => {
 		dataSource.getMatchPossibilities().then((x: QueryResultRow[]) => {
 			setMatchState(x.sort((a, b) => a.match_num - b.match_num));
+			setMatchNum("");
 		});
-	}, []);
-	const [matchNum, setMatchNum] = useState<string>("");
+	}, [dataSource]);
 
 	const [teamState, setTeamState] = useState<teams>({blue_nums: [], red_nums: []});
 	useEffect(() => {
@@ -73,7 +74,7 @@ export default function ScoutingApp() {
 				</ul>
 			</nav>
 
-			<Possibilities setDataSource={setDataSource} />
+			<Possibilities setDataSource={setDataSource} dataSource={dataSource} />
 			
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">

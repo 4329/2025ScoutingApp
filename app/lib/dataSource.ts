@@ -20,6 +20,10 @@ export class QRCodeSource implements DataSource {
         this.data = data;
     }
 
+	addData(data: any[]) {
+		Object.entries(data).map(([k, v]) => this.data[k as any] = v);
+	}
+
     getMatchPossibilities() {
         return new Promise<QueryResultRow[]>((res, _) => res(this.data.map(x => {return {match_num: x.match_num}})));
     }

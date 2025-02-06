@@ -4,16 +4,18 @@ import { QRCodeSVG } from "qrcode.react";
 import { Dispatch, useState } from "react";
 import Modal from "react-modal";
 import QRModal from "../ModalScanner";
+import { posix } from "path";
 
-export default function Possibilities({setDataSource}: {setDataSource: Dispatch<DataSource>}) {
-    const [possibilities, setPossibilities] = useState("");
+export default function Possibilities({dataSource, setDataSource}: {dataSource: DataSource, setDataSource: Dispatch<DataSource>}) {
+    const [possibilities, setPossibilities] = useState<string[]>();
+
     const [scan, setScan] = useState(false);
 
     return (
         <>
             <button className="button-text" onClick={() => {
                 getAllPossibilities().then(x => {
-                    setPossibilities(formatPossibilities(x as any));
+					setPossibilities(formatPossibilities(x as any));
                 })
             }} >Show Possibilities</button>
             <button className="button-text" onClick={() => setScan(true)} >Scan Possibilities</button>
@@ -31,19 +33,21 @@ export default function Possibilities({setDataSource}: {setDataSource: Dispatch<
                 }}>
                 <div className="grid grid-cols-3 place-items-center">
                     <div />
-                    <button className="button-text" onClick={() => setPossibilities("")}>Close</button>
+                    <button className="button-text" onClick={() => setPossibilities(undefined)}>Close</button>
                     <div />
 
                     <div />
                     <div className="p-5">
-                        <QRCodeSVG value={possibilities} bgColor="white" marginSize={1} size={300} />
+					{(possibilities ?? []).map((x: any) => <QRCodeSVG value={x} bgColor="white" marginSize={1} size={300} key={x} />)}
                     </div>
                 </div>
             </Modal>
 
             <QRModal isOpen={scan} 
                 onScan={x => {
-                    setDataSource(new QRCodeSource(parsePossibilities(x[0].rawValue)));
+					let possibilities = parsePossibilities(x[0].rawValue);
+					if (dataSource && (dataSource as any).addData) (dataSource as any).addData(possibilities);
+					else setDataSource(new QRCodeSource(possibilities));
                 }} 
                 close={() => setScan(false)}/>
         </>
@@ -59,10 +63,17 @@ function formatPossibilities(possibilities: { match_num: number, red_nums: numbe
         }, "");
     }
 
-    let encoded = "";
-    for (const x of possibilities) {
-        encoded += x.match_num + "-" + doArray(x.blue_nums) + doArray(x.red_nums);
-    }
+    let encoded: string[] = [];
+
+	let iMax = 1;
+	for (let i = 0; i < iMax; i++) {
+		let accumulated = "";
+		for (let j = Math.round(i * (possibilities.length / iMax)); j < (i + 1) * (possibilities.length / iMax); j++) {
+			accumulated += possibilities[j].match_num + "-" + doArray(possibilities[j].blue_nums) + doArray(possibilities[j].red_nums);
+		}
+		encoded.push(accumulated);
+	}
+
     return encoded;
 }
 
