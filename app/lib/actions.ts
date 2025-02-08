@@ -12,6 +12,8 @@ import { AuthError } from "next-auth";
 export async function populatePossibilitiesWithTBA(eventkey: string) {
     const data = await getTBAMatchData(eventkey);
     data.forEach(async (x) => {
+		if (x.comp_level != "qm") return;
+
         await sql`
             INSERT INTO possibilities (match_num, blue_nums, red_nums)
             VALUES (${x.number}, 

@@ -3,7 +3,8 @@ export async function getTBAMatchData(eventkey: string) {
     return data.map((x) => {
         return {
             teams: x.alliances.blue.team_keys.concat(x.alliances.red.team_keys).map((x: string) => x.replace("frc", '')),
-            number: x.match_number
+            number: x.match_number,
+			comp_level: x.comp_level,
         };
     });
 }
