@@ -51,7 +51,7 @@ export default function ScoutingApp() {
 	useEffect(() => {
 		if (scouterid)
 			setTeamNum(teamState.blue_nums.concat(teamState.red_nums)[scouterid] + "");
-	}, [scouterid, matchNum])
+	}, [scouterid, teamState])
 
 	const [initial, setInitial] = useState<state>({} as state);
 
@@ -127,7 +127,7 @@ export default function ScoutingApp() {
 							})}
 						</Dropdown>
 						{scouterid ?
-							<div className="title !mt-9">{teamState.blue_nums.concat(teamState.red_nums)[scouterid]}</div>
+							<div className="title !mt-9">{teamNum}</div>
 								: <></>
 						}
 					</div>
