@@ -56,7 +56,7 @@ export default function Possibilities({eventKey, dataSource, setDataSource}: {ev
     );
 }
 
-function formatPossibilities(eventKey: string, possibilities: { match_num: number, red_nums: number[], blue_nums: number[] }[]) {
+export function formatPossibilities(eventKey: string, possibilities: { match_num: number, red_nums: number[], blue_nums: number[] }[]) {
     function doArray(array: number[]) {
         return array.reduce((a, b) => {
             let out = b + "";
@@ -65,20 +65,20 @@ function formatPossibilities(eventKey: string, possibilities: { match_num: numbe
         }, "");
     }
 
-    let encoded: string = "";
+    let encoded= "";
 
-	let accumulated = "";
 	for (let i = 0; i < possibilities.length; i++) {
-		accumulated += possibilities[i].match_num + "-" + doArray(possibilities[i].blue_nums) + doArray(possibilities[i].red_nums);
+		encoded += possibilities[i].match_num + "-" + doArray(possibilities[i].blue_nums) + doArray(possibilities[i].red_nums);
 	}
 
-    return eventKey + "-" + accumulated;
+    return eventKey + "-" + encoded;
 }
 
-function parsePossibilities(possibilities: string) {
+export function parsePossibilities(possibilities: string) {
 	let eventKeyIndex = possibilities.indexOf("-");
 	let eventKey = possibilities.substring(0, eventKeyIndex);
-	possibilities = possibilities.substring(eventKeyIndex);
+	possibilities = possibilities.substring(eventKeyIndex + 1);
+	console.log(possibilities);
 
 
     let matches = []
