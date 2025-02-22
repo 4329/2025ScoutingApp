@@ -42,7 +42,7 @@ export class QRCodeSource implements DataSource {
     }
 
 	getEvent() {
-		return new Promise<string>((res, _) => res(""));
+		return new Promise<string>((res, _) => res(this.data[0].event_name));
 	}
 }
 
