@@ -10,10 +10,12 @@ export default function WeirdDataInputter({onData}: {onData: Function}) {
 					case "deleteContentBackward":
 						setData(data.slice(0, data.length - 1));
 						break;
+
+					case "insertFromPaste":
 					case "insertText": {
 						const eventData = (e.nativeEvent as any).data
 						let newData = data + eventData;
-						if (eventData == ']') {
+						if (eventData.includes('}')) {
 							try {
 								onData(newData);
 							} catch (e) {

@@ -8,16 +8,25 @@ import { signIn } from "@/auth";
 import { SignInOptions } from "next-auth/react";
 import { revalidatePath } from "next/cache";
 import { AuthError } from "next-auth";
+import { checkTables } from "./seed";
 
 export async function populatePossibilitiesWithTBA(eventkey: string) {
+	await sql`DROP TABLE possibilities`;
+	await checkTables();
+
+
     const data = await getTBAMatchData(eventkey);
     data.forEach(async (x) => {
+		if (x.comp_level != "qm") return;
+
         await sql`
-            INSERT INTO possibilities (match_num, blue_nums, red_nums)
-            VALUES (${x.number}, 
-					ARRAY[${x.teams[0]}, ${x.teams[1]}, ${x.teams[2]}]::int[],
-					ARRAY[${x.teams[3]}, ${x.teams[4]}, ${x.teams[5]}]::int[])
-            ON CONFLICT (match_num)
+            INSERT INTO possibilities (event_name, match_num, blue_nums, red_nums)
+            VALUES (
+				${eventkey},
+				${x.number}, 
+				ARRAY[${x.teams[0]}, ${x.teams[1]}, ${x.teams[2]}]::int[],
+				ARRAY[${x.teams[3]}, ${x.teams[4]}, ${x.teams[5]}]::int[])
+            ON CONFLICT (event_name, match_num)
                 DO UPDATE SET red_nums = EXCLUDED.red_nums, blue_nums = EXCLUDED.blue_nums
        `;
     });
@@ -62,12 +71,12 @@ const points: any = {
 	auto_processor: 0,
 }
 
-export async function getTeams() {
-    const data = await getMatches();
+export async function getTeams(eventKey: string) {
+    const data = await getMatches(eventKey);
     const teamData: any = { };
     data.forEach((match) => {
         Object.entries(match)
-            .filter(x => !["team_num", "match_num", "is_red", "submitter_name"].includes(x[0]))
+            .filter(x => !["event_name", "team_num", "match_num", "is_red", "submitter_name"].includes(x[0]))
             .forEach(x => {
                 teamData[match.team_num] ??= { total_score: 0, num_matches: 0 };
                 teamData[match.team_num][x[0]] = (teamData[match.team_num][x[0]] ?? 0) + (x[1] + 0);

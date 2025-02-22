@@ -12,51 +12,86 @@ import Possibilities from "../ui/scoutingapp/Possibilities";
 import { scoreToState, state, teams } from "../lib/match";
 
 export default function ScoutingApp() {
+
 	const [dataSource, setDataSource] = useState<DataSource>(new NetworkSource());
 	useEffect(() => {
 		addEventListener("online", () => setDataSource(new NetworkSource()));
 		addEventListener("offline", () => setDataSource(new NothingSource()));
 	}, [])
 
-	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
+	const [eventKey, setEventKey] = useState("");
 	useEffect(() => {
-		dataSource.getMatchPossibilities().then((x: QueryResultRow[]) => {
-			setMatchState(x.sort((a, b) => a.match_num - b.match_num));
+		dataSource.getEvent().then((x: string) => {
+			console.log(x);
+			 setEventKey(x);
 		});
-	}, []);
+	}, [dataSource]);
+
+	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
 	const [matchNum, setMatchNum] = useState<string>("");
+	useEffect(() => {
+		if (eventKey == "") return;
+
+		dataSource.getMatchPossibilities(eventKey).then((x: QueryResultRow[]) => {
+			setMatchState(x.sort((a, b) => a.match_num - b.match_num));
+			setMatchNum("");
+		});
+	}, [eventKey, dataSource]);
 
 	const [teamState, setTeamState] = useState<teams>({blue_nums: [], red_nums: []});
 	useEffect(() => {
-		if (matchNum == "") return;
-		dataSource.getTeams(matchNum).then((x: QueryResultRow[]) => {
+		if (matchNum == "" || eventKey == "") return;
+		dataSource.getTeams(eventKey, matchNum).then((x: QueryResultRow[]) => {
 			setTeamState(x[0] as teams);
 		});
-	}, [matchNum]);
+	}, [eventKey, matchNum]);
 	const [scouterid, setScouterid] = useState<number | undefined>();
     const [teamNum, setTeamNum] = useState<string>("");
 
 	useEffect(() => {
 		if (scouterid)
 			setTeamNum(teamState.blue_nums.concat(teamState.red_nums)[scouterid] + "");
-	}, [scouterid, matchNum])
+	}, [scouterid, teamState])
 
 	const [initial, setInitial] = useState<state>({} as state);
+
 	useEffect(() => {
-		if (matchNum && teamNum) {
-			dataSource.getData(matchNum, teamNum).then(x => {
+		if (eventKey && matchNum && teamNum) {
+			dataSource.getData(eventKey, matchNum, teamNum).then(x => {
 				if (x && x[0]) {
 					Object.keys(x[0])
 						.filter(y => !["match_num", "team_num", "is_red"].includes(y))
 						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
-					console.log(x[0]);
 					setInitial(x[0] as state);
 				} else {
-					setInitial({} as state);
+					setInitial({
+						"auto_leave": false,
+						"auto_l1": 0,
+						"auto_l2": 0,
+						"auto_l3": 0,
+						"auto_l4": 0,
+						"auto_processor": 0,
+						"auto_net": 0,
+						"auto_total": 0,
+
+						"teleop_l1": 0,
+						"teleop_l2": 0,
+						"teleop_l3": 0,
+						"teleop_l4": 0,
+						"teleop_processor": 0,
+						"teleop_net": 0,
+						"teleop_total": 0,
+
+						"endgame": 0,
+						"endgame_total": 0,
+
+						"match_total": 0,
+					} as state);
+					setTimeout(() => setInitial({} as state), 200);
 				}
 			})
 		}
-	}, [teamNum]);
+	}, [teamNum, matchNum]);
 
 	return (
         <>
@@ -72,7 +107,7 @@ export default function ScoutingApp() {
 				</ul>
 			</nav>
 
-			<Possibilities setDataSource={setDataSource} />
+			<Possibilities eventKey={eventKey} setDataSource={setDataSource} dataSource={dataSource} />
 			
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">
@@ -92,13 +127,13 @@ export default function ScoutingApp() {
 							})}
 						</Dropdown>
 						{scouterid ?
-							<div className="title !mt-9">{teamState.blue_nums.concat(teamState.red_nums)[scouterid]}</div>
+							<div className="title !mt-9">{teamNum}</div>
 								: <></>
 						}
 					</div>
 				</div>
 			</div>
-			<ScoutingForm matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
+			<ScoutingForm eventKey={eventKey} matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
         </>
     );
 

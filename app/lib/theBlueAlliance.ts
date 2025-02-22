@@ -3,13 +3,13 @@ export async function getTBAMatchData(eventkey: string) {
     return data.map((x) => {
         return {
             teams: x.alliances.blue.team_keys.concat(x.alliances.red.team_keys).map((x: string) => x.replace("frc", '')),
-            number: x.match_number
+            number: x.match_number,
+			comp_level: x.comp_level,
         };
     });
 }
 
 export async function getTBAEventTeams(eventKey: string) {
-	console.log(await getTBA(`https://www.thebluealliance.com/api/v3/event/${eventKey}/teams`))
     return await getTBA(`https://www.thebluealliance.com/api/v3/event/${eventKey}/teams`);
 }
 
