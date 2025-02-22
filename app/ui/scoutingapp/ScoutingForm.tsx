@@ -10,7 +10,7 @@ import { ScoutingDataInputter } from "./ScoutingDataInputter";
 import { state } from "@/app/lib/match";
 import { formAtData } from "@/app/lib/form";
 
-export default function ScoutingForm({matchNum, teamNum, teamState, initialStates}: {matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state}) {
+export default function ScoutingForm({eventKey, matchNum, teamNum, teamState, initialStates}: {eventKey: string, matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state}) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [data, setData] = useState({});
 	const [notification, setNotification] = useState("");
@@ -34,8 +34,7 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 				return;
 			}
 
-			let out = formAtData(e, matchNum, teamNum, teamState.red_nums.includes(parseInt(teamNum)));
-			console.log(out);
+			let out = formAtData(e, eventKey, matchNum, teamNum, teamState.red_nums.includes(parseInt(teamNum)));
 
 			if (!out.match_num) {
 				runNotification(`${out} has no data`, "/uncooldog.gif");

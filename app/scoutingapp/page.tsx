@@ -19,22 +19,32 @@ export default function ScoutingApp() {
 		addEventListener("offline", () => setDataSource(new NothingSource()));
 	}, [])
 
-	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
-	const [matchNum, setMatchNum] = useState<string>("");
+	const [eventKey, setEventKey] = useState("");
 	useEffect(() => {
-		dataSource.getMatchPossibilities().then((x: QueryResultRow[]) => {
-			setMatchState(x.sort((a, b) => a.match_num - b.match_num));
-			setMatchNum("");
+		dataSource.getEvent().then((x: string) => {
+			console.log(x);
+			 setEventKey(x);
 		});
 	}, [dataSource]);
 
+	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
+	const [matchNum, setMatchNum] = useState<string>("");
+	useEffect(() => {
+		if (eventKey == "") return;
+
+		dataSource.getMatchPossibilities(eventKey).then((x: QueryResultRow[]) => {
+			setMatchState(x.sort((a, b) => a.match_num - b.match_num));
+			setMatchNum("");
+		});
+	}, [eventKey, dataSource]);
+
 	const [teamState, setTeamState] = useState<teams>({blue_nums: [], red_nums: []});
 	useEffect(() => {
-		if (matchNum == "") return;
-		dataSource.getTeams(matchNum).then((x: QueryResultRow[]) => {
+		if (matchNum == "" || eventKey == "") return;
+		dataSource.getTeams(eventKey, matchNum).then((x: QueryResultRow[]) => {
 			setTeamState(x[0] as teams);
 		});
-	}, [matchNum]);
+	}, [eventKey, matchNum]);
 	const [scouterid, setScouterid] = useState<number | undefined>();
     const [teamNum, setTeamNum] = useState<string>("");
 
@@ -46,8 +56,8 @@ export default function ScoutingApp() {
 	const [initial, setInitial] = useState<state>({} as state);
 
 	useEffect(() => {
-		if (matchNum && teamNum) {
-			dataSource.getData(matchNum, teamNum).then(x => {
+		if (eventKey && matchNum && teamNum) {
+			dataSource.getData(eventKey, matchNum, teamNum).then(x => {
 				if (x && x[0]) {
 					Object.keys(x[0])
 						.filter(y => !["match_num", "team_num", "is_red"].includes(y))
@@ -97,7 +107,7 @@ export default function ScoutingApp() {
 				</ul>
 			</nav>
 
-			<Possibilities setDataSource={setDataSource} dataSource={dataSource} />
+			<Possibilities eventKey={eventKey} setDataSource={setDataSource} dataSource={dataSource} />
 			
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">
@@ -123,7 +133,7 @@ export default function ScoutingApp() {
 					</div>
 				</div>
 			</div>
-			<ScoutingForm matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
+			<ScoutingForm eventKey={eventKey} matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
         </>
     );
 

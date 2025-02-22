@@ -62,6 +62,7 @@ export function stateToScore(key: string, value: number | string): number | stri
 }
 
 export type state = {
+	"event_name": string,
 	"match_num": number,
 	"team_num": string,
 	"is_red": boolean,

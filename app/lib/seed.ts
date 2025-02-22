@@ -3,8 +3,6 @@
 import { sql } from "@vercel/postgres";
 
 export async function checkTables() {
-	console.log("sadf")
-
 	await sql`
 		DO $$ BEGIN
 			CREATE TYPE endgame_style AS ENUM ( 'nothing', 'park', 'shallow', 'deep' );
@@ -15,6 +13,7 @@ export async function checkTables() {
 
     await sql`
         CREATE TABLE IF NOT EXISTS matches (
+			event_name text NOT NULL,
             match_num int NOT NULL,
             team_num text NOT NULL,
 			is_red bool,
@@ -43,20 +42,21 @@ export async function checkTables() {
 
 			submitter_name text,
 
-            PRIMARY KEY (match_num, team_num)
+            PRIMARY KEY (event_name, match_num, team_num)
         );
     `;
 
-	console.log("sadf")
     await sql`
         CREATE TABLE IF NOT EXISTS possibilities (
-            match_num int UNIQUE,
+			event_name text NOT NULL,
+            match_num int NOT NULL,
             red_nums int[3],
-            blue_nums int[3]
+            blue_nums int[3],
+
+			PRIMARY KEY (event_name, match_num)
         );
     `;
 
-	console.log("sadf")
     await sql `
         CREATE TABLE IF NOT EXISTS teams (
             team_num int UNIQUE,
@@ -68,13 +68,10 @@ export async function checkTables() {
         );
     `;
 
-	console.log("sadf")
 	await sql`
 		CREATE TABLE IF NOT EXISTS admins (
 			email text UNIQUE,
 			password text
 		);
 	`;
-
-	console.log("sadf")
 }

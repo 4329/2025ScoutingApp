@@ -1,13 +1,15 @@
 import { QueryResultRow } from "@vercel/postgres";
-import { getData, getMatchPossibilities, getTeams } from "./getter";
+import { getData, getEvent, getMatchPossibilities, getTeams } from "./getter";
 
 export interface DataSource {
-    getMatchPossibilities(): Promise<QueryResultRow[]>;
-    getTeams(matchNum: string): Promise<QueryResultRow[]>;
-    getData(matchNum: string, teamNum: string): Promise<QueryResultRow[]>;
+	getEvent(): Promise<string>;
+    getMatchPossibilities(eventKey: string): Promise<QueryResultRow[]>;
+    getTeams(eventKey: string, matchNum: string): Promise<QueryResultRow[]>;
+    getData(eventKey: string, matchNum: string, teamNum: string): Promise<QueryResultRow[]>;
 }
 
 export class NetworkSource implements DataSource {
+	getEvent = getEvent;
     getMatchPossibilities = getMatchPossibilities;
     getTeams = getTeams;
     getData = getData;
@@ -38,6 +40,10 @@ export class QRCodeSource implements DataSource {
     getData(_matchNum: string, _teamNum: string) {
         return new Promise<QueryResultRow[]>((res, _) => res([]));
     }
+
+	getEvent() {
+		return new Promise<string>((res, _) => res(""));
+	}
 }
 
 export class NothingSource implements DataSource {
@@ -52,4 +58,8 @@ export class NothingSource implements DataSource {
     getData(_matchNum: string, _teamNum: string) {
         return new Promise<QueryResultRow[]>((res, _) => res([]));
     }
+
+	getEvent() {
+		return new Promise<string>((res, _) => res(""));
+	}
 }

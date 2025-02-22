@@ -6,8 +6,8 @@ import Modal from "react-modal";
 import QRModal from "../ModalScanner";
 import { posix } from "path";
 
-export default function Possibilities({dataSource, setDataSource}: {dataSource: DataSource, setDataSource: Dispatch<DataSource>}) {
-    const [possibilities, setPossibilities] = useState<string[]>();
+export default function Possibilities({eventKey, dataSource, setDataSource}: {eventKey: string, dataSource: DataSource, setDataSource: Dispatch<DataSource>}) {
+    const [possibilities, setPossibilities] = useState<string>();
 
     const [scan, setScan] = useState(false);
 
@@ -15,7 +15,7 @@ export default function Possibilities({dataSource, setDataSource}: {dataSource: 
         <>
             <button className="button-text" onClick={() => {
                 getAllPossibilities().then(x => {
-					setPossibilities(formatPossibilities(x as any));
+					setPossibilities(formatPossibilities(eventKey, x as any));
                 })
             }} >Show Possibilities</button>
             <button className="button-text" onClick={() => setScan(true)} >Scan Possibilities</button>
@@ -38,7 +38,9 @@ export default function Possibilities({dataSource, setDataSource}: {dataSource: 
 
                     <div />
                     <div className="p-5">
-					{(possibilities ?? []).map((x: any) => <QRCodeSVG value={x} bgColor="white" marginSize={1} size={300} key={x} />)}
+					{ possibilities ?
+						<QRCodeSVG value={possibilities} bgColor="white" marginSize={1} size={300} />
+							: <></>}
                     </div>
                 </div>
             </Modal>
@@ -54,7 +56,7 @@ export default function Possibilities({dataSource, setDataSource}: {dataSource: 
     );
 }
 
-function formatPossibilities(possibilities: { match_num: number, red_nums: number[], blue_nums: number[] }[]) {
+function formatPossibilities(eventKey: string, possibilities: { match_num: number, red_nums: number[], blue_nums: number[] }[]) {
     function doArray(array: number[]) {
         return array.reduce((a, b) => {
             let out = b + "";
@@ -63,24 +65,27 @@ function formatPossibilities(possibilities: { match_num: number, red_nums: numbe
         }, "");
     }
 
-    let encoded: string[] = [];
+    let encoded: string = "";
 
-	let iMax = 1;
-	for (let i = 0; i < iMax; i++) {
-		let accumulated = "";
-		for (let j = Math.round(i * (possibilities.length / iMax)); j < (i + 1) * (possibilities.length / iMax); j++) {
-			accumulated += possibilities[j].match_num + "-" + doArray(possibilities[j].blue_nums) + doArray(possibilities[j].red_nums);
-		}
-		encoded.push(accumulated);
+	let accumulated = "";
+	for (let i = 0; i < possibilities.length; i++) {
+		accumulated += possibilities[i].match_num + "-" + doArray(possibilities[i].blue_nums) + doArray(possibilities[i].red_nums);
 	}
 
-    return encoded;
+    return eventKey + "-" + accumulated;
 }
 
 function parsePossibilities(possibilities: string) {
+	let eventNameIndex = possibilities.indexOf("-");
+	let eventName = possibilities.substring(0, eventNameIndex);
+	possibilities = possibilities.substring(eventNameIndex);
+
+
     let matches = []
     for (let i = 0; i < possibilities.length; i++) {
-        let out: any = {};
+        let out: any = {
+			event_name: eventName
+		};
         let start = i;
         while (possibilities.charAt(i) != "-") i++;
         out["match_num"] = possibilities.substring(start, i);

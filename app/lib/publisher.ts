@@ -6,7 +6,7 @@ import { state, stateToScore } from "./match";
 function sumSection(state: state, sectionName: string): number {
 	let total = 0;
 	for (let key of Object.keys(state)) {
-		if (!["match_num", "team_num", "is_red", "submitter_name"].includes(key) 
+		if (!["event_name", "match_num", "team_num", "is_red", "submitter_name"].includes(key) 
 			&& key.includes(sectionName) 
 			&& (state as any)[key]) {
 
@@ -31,11 +31,10 @@ export async function publish(toPublish: state) {
 	sqled.teleop_total = sumSection(toPublish, "teleop");
 	sqled.endgame_total = sumSection(toPublish, "endgame");
 
-	console.log(sqled);
-
 	try {
 		await sql`
 		INSERT INTO matches (
+			event_name,
             match_num,
             team_num,
 			is_red,
@@ -64,6 +63,7 @@ export async function publish(toPublish: state) {
 		)
 
 		VALUES (
+			${sqled.event_name},
             ${sqled.match_num},
             ${sqled.team_num},
 			${sqled.is_red},
@@ -90,8 +90,9 @@ export async function publish(toPublish: state) {
 
 			${sqled.match_total}
 		)
-		ON CONFLICT (match_num, team_num)
+		ON CONFLICT (event_name, match_num, team_num)
 		DO UPDATE SET 
+			event_name = EXCLUDED.event_name,
 			match_num = EXCLUDED.match_num,
             team_num = EXCLUDED.team_num,
 			is_red = EXCLUDED.is_red,

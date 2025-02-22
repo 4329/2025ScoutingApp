@@ -19,7 +19,6 @@ export default function Page() {
             </header>
             <h2 className="text-[40px] text-center m-10">Pull Data From TBA</h2>
             <MatthewsButton title="Pull Matches" toRun={populatePossibilitiesWithTBA}/>
-            <MatthewsButton title="Pull Teams" toRun={populateTeamsWithTBA}/>
 
             <div id="padding" className="m-20"></div>
 

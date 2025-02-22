@@ -1,10 +1,11 @@
 import { Dispatch } from "react";
 import { publish } from "./publisher";
 
-export function formAtData(e: any, matchNum: string, teamNum: string, is_red: boolean) {
+export function formAtData(e: any, eventKey: string, matchNum: string, teamNum: string, is_red: boolean) {
 	const tmp: any = e.target;
 
 	let out: any = {
+		event_name: eventKey,
 		match_num: matchNum,
 		team_num: teamNum,
 		is_red: is_red

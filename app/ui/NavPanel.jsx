@@ -7,7 +7,6 @@ export default function NavPanel() {
                 <li><Link href="/">Home</Link></li>
                 <li><Link href="/scoutingapp">Scouting App</Link></li>
                 <li><Link href="/admin-panel">Admin Panel</Link></li>
-                <li><Link href="/data-viewer">Data Viewer</Link></li>
                 <li><Link href="/qrcode">QR Code Scanner</Link></li>
             </ul>
         </nav>

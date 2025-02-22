@@ -4,13 +4,19 @@ import { ScoutingDataInputter } from "../ui/scoutingapp/ScoutingDataInputter";
 import Dropdown from "../ui/Dropdown";
 import QRModal from "../ui/ModalScanner";
 import WeirdDataInputter from "../ui/qrcode/weirdDataInputter";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { state } from "../lib/match";
 import { publish } from "../lib/publisher";
 import { formAtData } from "../lib/form";
+import { getEvent } from "../lib/getter";
 
 
 export default function Qrcode() {
+	const [eventKey, setEventKey] = useState("");
+	useEffect(() => {
+		getEvent().then(setEventKey);
+	}, []);
+
 	const [showQR, setShowQR] = useState(false);
 	const [qrData, setQrData] = useState<any>({});
 
@@ -81,7 +87,7 @@ export default function Qrcode() {
 						return;
 					}
 
-					let out = formAtData(e, matchState, teamState, qrData[matchState][teamState].is_red);
+					let out = formAtData(e, eventKey, matchState, teamState, qrData[matchState][teamState].is_red);
 					let newData = {...qrData};
 					newData[matchState][teamState] = out;
 					setQrData(newData);
