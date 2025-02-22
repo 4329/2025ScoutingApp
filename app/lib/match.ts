@@ -25,7 +25,7 @@ const scores: Map<string, number> = new Map([
 	["auto_l2", 4],
 	["auto_l3", 6],
 	["auto_l4", 7],
-	["auto_processor", 6],
+	["auto_processor", 2],
 	["auto_net", 4],
 
 	["teleop_l1", 2],
