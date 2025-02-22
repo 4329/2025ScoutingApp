@@ -76,15 +76,15 @@ function formatPossibilities(eventKey: string, possibilities: { match_num: numbe
 }
 
 function parsePossibilities(possibilities: string) {
-	let eventNameIndex = possibilities.indexOf("-");
-	let eventName = possibilities.substring(0, eventNameIndex);
-	possibilities = possibilities.substring(eventNameIndex);
+	let eventKeyIndex = possibilities.indexOf("-");
+	let eventKey = possibilities.substring(0, eventKeyIndex);
+	possibilities = possibilities.substring(eventKeyIndex);
 
 
     let matches = []
     for (let i = 0; i < possibilities.length; i++) {
         let out: any = {
-			event_name: eventName
+			event_name: eventKey
 		};
         let start = i;
         while (possibilities.charAt(i) != "-") i++;
