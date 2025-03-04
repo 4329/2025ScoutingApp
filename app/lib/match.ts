@@ -88,4 +88,6 @@ export type state = {
 	"endgame_total": number,
 
 	"match_total": number,
+
+	"submitter_name": string,
 }

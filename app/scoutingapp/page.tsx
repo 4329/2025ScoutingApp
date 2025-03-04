@@ -7,7 +7,7 @@ import { Dispatch, MutableRefObject, useEffect, useRef, useState } from "react";
 import { getAllPossibilities } from "../lib/getter";
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import ScoutingForm from "../ui/scoutingapp/ScoutingForm"
-import { DataSource, NetworkSource, NothingSource } from "../lib/dataSource";
+import { DataSource, NetworkSource, NothingSource, rankEntry } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
 import { scoreToState, state, teams } from "../lib/match";
 
@@ -55,6 +55,17 @@ export default function ScoutingApp() {
 
 	const [initial, setInitial] = useState<state>({} as state);
 
+	const [name, setName] = useState<string>();
+	const [top, setTop] = useState<rankEntry[]>([])
+	useEffect(() => {
+		dataSource.getTop(name).then(setTop)
+		const interval = setInterval(() => {
+			dataSource.getTop(name).then(setTop)
+		}, 10000);
+
+		return () => clearInterval(interval);
+	}, [name]);
+
 	useEffect(() => {
 		if (eventKey && matchNum && teamNum) {
 			dataSource.getData(eventKey, matchNum, teamNum).then(x => {
@@ -87,7 +98,7 @@ export default function ScoutingApp() {
 
 						"match_total": 0,
 					} as state);
-					setTimeout(() => setInitial({} as state), 200);
+					setTimeout(() => setInitial({} as state), 20);
 				}
 			})
 		}
@@ -133,7 +144,7 @@ export default function ScoutingApp() {
 					</div>
 				</div>
 			</div>
-			<ScoutingForm eventKey={eventKey} matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
+			<ScoutingForm eventKey={eventKey} matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial} top={top} setName={setName} />
         </>
     );
 

@@ -59,7 +59,9 @@ export async function publish(toPublish: state) {
 			endgame,
 			endgame_total,
 
-			match_total
+			match_total,
+
+			submitter_name
 		)
 
 		VALUES (
@@ -88,7 +90,9 @@ export async function publish(toPublish: state) {
 			${sqled.endgame},
 			${sqled.endgame_total},
 
-			${sqled.match_total}
+			${sqled.match_total},
+
+			${sqled.submitter_name}
 		)
 		ON CONFLICT (event_name, match_num, team_num)
 		DO UPDATE SET 
@@ -117,7 +121,9 @@ export async function publish(toPublish: state) {
 			endgame = EXCLUDED.endgame,
 			endgame_total = EXCLUDED.endgame_total,
 
-			match_total = EXCLUDED.match_total
+			match_total = EXCLUDED.match_total,
+
+			submitter_name = EXCLUDED.submitter_name
 		`;
 	} catch (err) {
 		console.log(JSON.stringify(err));
