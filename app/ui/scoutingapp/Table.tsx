@@ -14,11 +14,17 @@ export function Table({data}: {data: rankEntry[]}) {
 				</thead>
 				<tbody>
 					{data.map(x => 
-							  <tr className={x.me ? "bg-blue-500" : ""} key={x.name}>
-								  <th>{x.rank + 1}</th>
-								  <th>{x.name}</th>
-								  <th>{x.score}</th>
-							  </tr>)}
+						<tr className={x.me ? "bg-blue-500" : ""} key={x.name}>
+						  <th>{x.rank + 1}</th>
+						  <th>{x.name}</th>
+						  <th>{x.score}</th>
+						</tr>)}
+					{Array(6).keys().map((_, i) =>
+						<tr key={i}>
+							<th className="h-[28px]"></th>
+							<th></th>
+							<th></th>
+						</tr>)}
 				</tbody>
 			</table>
 		</div>
