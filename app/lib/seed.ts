@@ -40,6 +40,9 @@ export async function checkTables() {
 
 			match_total int,
 
+			defense bool,
+			died bool,
+
 			submitter_name text,
 
             PRIMARY KEY (event_name, match_num, team_num)

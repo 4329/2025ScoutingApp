@@ -89,5 +89,8 @@ export type state = {
 
 	"match_total": number,
 
+	"defense": boolean,
+	"died": boolean,
+
 	"submitter_name": string,
 }

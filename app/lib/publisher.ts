@@ -61,6 +61,9 @@ export async function publish(toPublish: state) {
 
 			match_total,
 
+			died,
+			defense,
+
 			submitter_name
 		)
 
@@ -92,6 +95,9 @@ export async function publish(toPublish: state) {
 
 			${sqled.match_total},
 
+			${sqled.died},
+			${sqled.defense},
+
 			${sqled.submitter_name}
 		)
 		ON CONFLICT (event_name, match_num, team_num)
@@ -122,6 +128,9 @@ export async function publish(toPublish: state) {
 			endgame_total = EXCLUDED.endgame_total,
 
 			match_total = EXCLUDED.match_total,
+
+			defense = EXCLUDED.defense,
+			died = EXCLUDED.died,
 
 			submitter_name = EXCLUDED.submitter_name
 		`;

@@ -55,6 +55,9 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 				<div className="h-56" />
 				<ImageSwitch current={endgame} />
 
+				<CoolSwitch className="pt-10 pl-10" id="defense" title="Defence" initial={initialStates.defense} />
+				<CoolSwitch className="p-10" id="died" title="Demolished" initial={initialStates.died} />
+
 			</section>
 		</>
 	)

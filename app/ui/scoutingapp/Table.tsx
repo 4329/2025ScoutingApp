@@ -15,7 +15,7 @@ export function Table({data}: {data: rankEntry[]}) {
 				<tbody>
 					{data.map(x => 
 							  <tr className={x.me ? "bg-blue-500" : ""} key={x.name}>
-								  <th>{x.rank}</th>
+								  <th>{x.rank + 1}</th>
 								  <th>{x.name}</th>
 								  <th>{x.score}</th>
 							  </tr>)}

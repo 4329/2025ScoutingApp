@@ -71,7 +71,7 @@ export default function ScoutingApp() {
 			dataSource.getData(eventKey, matchNum, teamNum).then(x => {
 				if (x && x[0]) {
 					Object.keys(x[0])
-						.filter(y => !["match_num", "team_num", "is_red"].includes(y))
+						.filter(y => !["match_num", "team_num", "is_red", "defense", "died"].includes(y))
 						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
 					setInitial(x[0] as state);
 				} else {
@@ -97,7 +97,10 @@ export default function ScoutingApp() {
 						"endgame_total": 0,
 
 						"match_total": 0,
-					} as state);
+
+						"defense": 0,
+						"died": 0,
+					} as unknown as state);
 					setTimeout(() => setInitial({} as state), 20);
 				}
 			})
