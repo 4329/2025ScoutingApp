@@ -47,7 +47,6 @@ export async function checkTables() {
         );
     `;
 
-	console.log("sadf")
     await sql`
         CREATE TABLE IF NOT EXISTS possibilities (
             match_num int UNIQUE,

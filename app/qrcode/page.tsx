@@ -88,7 +88,7 @@ export default function Qrcode() {
 					qrData[matchState] && qrData[matchState][teamState] ?
 						qrData[matchState][teamState] :
 						({} as state)
-				}/>
+				} top={["", 0]}/>
 			</main>
 			<button className="button-text" onClick={() => Object.keys(qrData).map((x: any) => Object.keys(qrData[x]).map((y: any) => {
 				let nonsense = keys.map(k => {
@@ -100,7 +100,7 @@ export default function Qrcode() {
 					}
 				});
 				console.log([x, y].concat(nonsense));
-				publish([x, y].concat(nonsense).concat("undefined"));
+				//publish([x, y].concat(nonsense).concat("undefined"));
 			}))}>Upload</button>
 		</>
 	);

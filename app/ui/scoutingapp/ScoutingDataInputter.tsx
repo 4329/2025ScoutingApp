@@ -6,11 +6,15 @@ import Dropdown from "../Dropdown";
 import Coralinator from "./Coralinator";
 import { state } from "@/app/lib/match";
 
-export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
+export function ScoutingDataInputter({initialStates, top}: {initialStates: state, top: [string, number]}) {
 	const [endgame, setEndgame] = useState("");
 
 	return (
 		<>
+			<div className="m-4 text-2xl">
+				Enter Name: <input className="m-4 p-1" id="submitter_name" /> {top[0] ? `Current Best: ${top[0]}, ${top[1]}` : ""}
+			</div>
+
 			<section className="scroll-mt-6" id="auto">
 				<h2>Auto</h2>
 				<CoolSwitch className="p-10" id="auto_leave" title="Leave" initial={initialStates.auto_leave} />

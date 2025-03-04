@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { ScoutingDataInputter } from "./ScoutingDataInputter";
 import { state } from "@/app/lib/match";
 
-export default function ScoutingForm({matchNum, teamNum, teamState, initialStates}: {matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state}) {
+export default function ScoutingForm({matchNum, teamNum, teamState, initialStates, top}: {matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state, top: [string, number]}) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [data, setData] = useState({});
 	const [notification, setNotification] = useState("");
@@ -62,6 +62,7 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 					break;
 				}
 			}
+			console.log(out);
 
 			if ((e.nativeEvent as any).submitter.name == "submit") {
 				runNotification("Successfully sent data","/cooldog.gif");
@@ -72,7 +73,7 @@ export default function ScoutingForm({matchNum, teamNum, teamState, initialState
 		}}>
 
 			<main>
-				<ScoutingDataInputter initialStates={initialStates} />
+				<ScoutingDataInputter initialStates={initialStates} top={top} />
 			</main>
 			<PendedSubmit />
 			<button className="button-text relative bottom-5" type="submit" onClick={() => {

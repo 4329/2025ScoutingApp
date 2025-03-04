@@ -58,6 +58,11 @@ export default function ScoutingApp() {
 		}
 	}, [teamNum]);
 
+	const [top, setTop] = useState(["", 0]);
+	useEffect(() => {
+		dataSource.getNames().then(setTop);
+	}, [dataSource])
+
 	return (
         <>
 			<header>
@@ -72,7 +77,7 @@ export default function ScoutingApp() {
 				</ul>
 			</nav>
 
-			<Possibilities setDataSource={setDataSource} />
+				<Possibilities setDataSource={setDataSource} />
 			
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">
@@ -98,7 +103,8 @@ export default function ScoutingApp() {
 					</div>
 				</div>
 			</div>
-			<ScoutingForm matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
+
+			<ScoutingForm matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial} top={top}/>
         </>
     );
 

@@ -6,12 +6,16 @@ export default function Dropdown({ className, name, children, setMatchNum, reren
     let [disp, setDisp]: [string, Dispatch<string>] = useState(name);
 
 	useEffect(() => {
+		console.log(initial)
 		if (initial && children) {
 			let child = children[children.findIndex(x => x.props.value == initial)]
 			if (child) {
 				setDisp(child.props.children as any as string);
 				if (setMatchNum) setMatchNum(child.props.value);
 			}
+		} else {
+			setDisp(name);
+			if (setMatchNum) setMatchNum("");
 		}
 	}, [initial]);
 
