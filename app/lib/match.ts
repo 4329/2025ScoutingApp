@@ -88,4 +88,9 @@ export type state = {
 	"endgame_total": number,
 
 	"match_total": number,
+
+	"defense": boolean,
+	"died": boolean,
+
+	"submitter_name": string,
 }

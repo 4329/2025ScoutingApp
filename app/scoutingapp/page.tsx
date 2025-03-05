@@ -7,7 +7,7 @@ import { Dispatch, MutableRefObject, useEffect, useRef, useState } from "react";
 import { getAllPossibilities } from "../lib/getter";
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import ScoutingForm from "../ui/scoutingapp/ScoutingForm"
-import { DataSource, NetworkSource, NothingSource } from "../lib/dataSource";
+import { DataSource, NetworkSource, NothingSource, rankEntry } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
 import { scoreToState, state, teams } from "../lib/match";
 
@@ -55,12 +55,23 @@ export default function ScoutingApp() {
 
 	const [initial, setInitial] = useState<state>({} as state);
 
+	const [name, setName] = useState<string>();
+	const [top, setTop] = useState<rankEntry[]>([])
+	useEffect(() => {
+		dataSource.getTop(name).then(setTop)
+		const interval = setInterval(() => {
+			dataSource.getTop(name).then(setTop)
+		}, 10000);
+
+		return () => clearInterval(interval);
+	}, [name]);
+
 	useEffect(() => {
 		if (eventKey && matchNum && teamNum) {
 			dataSource.getData(eventKey, matchNum, teamNum).then(x => {
 				if (x && x[0]) {
 					Object.keys(x[0])
-						.filter(y => !["match_num", "team_num", "is_red"].includes(y))
+						.filter(y => !["match_num", "team_num", "is_red", "defense", "died"].includes(y))
 						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
 					setInitial(x[0] as state);
 				} else {
@@ -86,8 +97,11 @@ export default function ScoutingApp() {
 						"endgame_total": 0,
 
 						"match_total": 0,
-					} as state);
-					setTimeout(() => setInitial({} as state), 200);
+
+						"defense": 0,
+						"died": 0,
+					} as unknown as state);
+					setTimeout(() => setInitial({} as state), 20);
 				}
 			})
 		}
@@ -133,7 +147,7 @@ export default function ScoutingApp() {
 					</div>
 				</div>
 			</div>
-			<ScoutingForm eventKey={eventKey} matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial}/>
+			<ScoutingForm eventKey={eventKey} matchNum={matchNum} teamNum={teamNum} teamState={teamState} initialStates={initial} top={top} setName={setName} />
         </>
     );
 

@@ -5,12 +5,13 @@ import ImageCrementor from "./ImageCrementor";
 import { useFormStatus } from "react-dom";
 import Modal from "react-modal"
 import { QRCodeSVG } from "qrcode.react";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, useEffect, useRef, useState } from "react";
 import { ScoutingDataInputter } from "./ScoutingDataInputter";
 import { state } from "@/app/lib/match";
 import { formAtData } from "@/app/lib/form";
+import { rankEntry } from "@/app/lib/dataSource";
 
-export default function ScoutingForm({eventKey, matchNum, teamNum, teamState, initialStates}: {eventKey: string, matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state}) {
+export default function ScoutingForm({eventKey, matchNum, teamNum, teamState, initialStates, top, setName}: {eventKey: string, matchNum: string, teamNum: string, teamState: QueryResultRow, initialStates: state, top: rankEntry[], setName: Dispatch<string | undefined>}) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [data, setData] = useState({});
 	const [notification, setNotification] = useState("");
@@ -50,7 +51,7 @@ export default function ScoutingForm({eventKey, matchNum, teamNum, teamState, in
 		}}>
 
 			<main>
-				<ScoutingDataInputter initialStates={initialStates} />
+				<ScoutingDataInputter initialStates={initialStates} top={top} setName={setName} />
 			</main>
 			<PendedSubmit />
 			<button className="button-text relative bottom-5" type="submit" onClick={() => {

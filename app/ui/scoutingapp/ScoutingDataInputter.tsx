@@ -1,12 +1,14 @@
 import CoolSwitch from "./CoolSwitch";
 import ImageCrementor from "./ImageCrementor";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, useEffect, useRef, useState } from "react";
 import Dropdown from "../Dropdown";
 import Coralinator from "./Coralinator";
 import { state } from "@/app/lib/match";
+import { rankEntry } from "@/app/lib/dataSource";
+import { Table } from "./Table";
 
-export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
+export function ScoutingDataInputter({initialStates, top, setName}: {initialStates: state, top: rankEntry[], setName: Dispatch<string | undefined>}) {
 	const [endgame, setEndgame] = useState("");
 	const [auto_corals, setAuto_corals] = useState([initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]);
 	const [teleop_corals, setTeleop_corals] = useState([initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]);
@@ -18,6 +20,12 @@ export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 
 	return (
 		<>
+			<div className="text-xl flex items-center">
+				Enter Name: <input className="m-4 p-1" id="submitter_name" onChange={x => {
+					setName(x.target.value);
+				}}/> {top[0] ? <Table data={top} /> : ""}
+			</div>
+
 			<section className="scroll-mt-6" id="auto">
 				<h2>Auto</h2>
 				<CoolSwitch className="p-10" id="auto_leave" title="Leave" initial={initialStates.auto_leave} />
@@ -46,6 +54,9 @@ export function ScoutingDataInputter({initialStates}: {initialStates: state}) {
 				<input type="hidden" id="endgame" value={endgame} />
 				<div className="h-56" />
 				<ImageSwitch current={endgame} />
+
+				<CoolSwitch className="pt-10 pl-10" id="defense" title="Defence" initial={initialStates.defense} />
+				<CoolSwitch className="p-10" id="died" title="Demolished" initial={initialStates.died} />
 
 			</section>
 		</>
