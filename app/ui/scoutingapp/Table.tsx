@@ -19,12 +19,12 @@ export function Table({data}: {data: rankEntry[]}) {
 						  <th>{x.name}</th>
 						  <th>{x.score}</th>
 						</tr>)}
-					{Array(6).keys().map((_, i) =>
+					{/*Array(6).keys().map((_, i) =>
 						<tr key={i}>
 							<th className="h-[28px]"></th>
 							<th></th>
 							<th></th>
-						</tr>)}
+						</tr>)*/}
 				</tbody>
 			</table>
 		</div>

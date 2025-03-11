@@ -44,7 +44,7 @@ export default function ScoutingForm({eventKey, matchNum, teamNum, teamState, in
 			}
 
 			if ((e.nativeEvent as any).submitter.name == "submit") {
-				runNotification("Successfully sent data","/cooldog.gif");
+				runNotification("Successfully sent data", "/cooldog.gif");
 				publish(out);
 			} else {
 				setData(out);
