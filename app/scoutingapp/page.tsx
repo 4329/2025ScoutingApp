@@ -22,7 +22,6 @@ export default function ScoutingApp() {
 	const [eventKey, setEventKey] = useState("");
 	useEffect(() => {
 		dataSource.getEvent().then((x: string) => {
-			console.log(x);
 			 setEventKey(x);
 		});
 	}, [dataSource]);

@@ -38,8 +38,9 @@ export default function ScoutingForm({eventKey, matchNum, teamNum, teamState, in
 			let out = formAtData(e, eventKey, matchNum, teamNum, teamState.red_nums.includes(parseInt(teamNum)));
 
 			if (!out.match_num) {
-				runNotification(`${out} has no data`, "/uncooldog.gif");
+				runNotification(`${(out as string).replaceAll("_", " ")} has no data`, "/uncooldog.gif");
 				setData({});
+				return;
 			}
 
 			if ((e.nativeEvent as any).submitter.name == "submit") {

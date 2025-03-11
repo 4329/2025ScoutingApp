@@ -9,6 +9,7 @@ import { rankEntry } from "@/app/lib/dataSource";
 import { Table } from "./Table";
 
 export function ScoutingDataInputter({initialStates, top, setName}: {initialStates: state, top: rankEntry[], setName: Dispatch<string | undefined>}) {
+	console.log("rended");
 	const [endgame, setEndgame] = useState("");
 	const [auto_corals, setAuto_corals] = useState([initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]);
 	const [teleop_corals, setTeleop_corals] = useState([initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]);
