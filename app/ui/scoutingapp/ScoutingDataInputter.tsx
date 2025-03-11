@@ -21,7 +21,7 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 
 	return (
 		<>
-			<div className="text-xl flex items-center">
+		<div className="text-xl flex items-center">
 				Enter Name: <input className="m-4 p-1" id="submitter_name" onChange={x => {
 					setName(x.target.value);
 				}}/> {top[0] ? <Table data={top} /> : ""}
