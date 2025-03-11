@@ -21,7 +21,7 @@ export function formAtData(e: any, eventKey: string, matchNum: string, teamNum: 
 			case "hidden":
 				case "text":
 				if (tmp[i].value == "") {
-				return tmp[i].name;
+				return tmp[i].id; // this is how I error
 			} else if (tmp[i].id == "hidden") {
 				break;
 			}

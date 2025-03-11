@@ -95,7 +95,7 @@ export default function Qrcode() {
 
 					<ScoutingDataInputter initialStates={qrData[matchState] && qrData[matchState][teamState] ?
 						qrData[matchState][teamState] :
-						({} as state)}/>
+						({} as state)} top={[]} setName={() => {}}/>
 
 					<button className="button-text" type="submit" name="submit">Update (not upload) this match specifically</button>
 					<button className="button-text" type="button" onClick={() => {
