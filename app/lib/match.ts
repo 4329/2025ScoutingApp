@@ -31,7 +31,7 @@ const scores: Map<string, number> = new Map([
 	["teleop_l1", 2],
 	["teleop_l2", 3],
 	["teleop_l3", 4],
-	["teleop_l4", 6],
+	["teleop_l4", 5],
 	["teleop_processor", 6],
 	["teleop_net", 4]
 ]);
