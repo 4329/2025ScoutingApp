@@ -21,7 +21,7 @@ export default function ImageCrementor({className, src, alt, id, title, initial}
 		<>
 			<div className="title">{title}</div>
 			<div className={`${className} ` + "flex items-center"}>
-				<input id={id} className="text-white text-6xl !w-[400px] pointer-events-none px-2" value={count} readOnly tabIndex={-1}></input>
+				<input id={id} className="text-black text-6xl !w-[400px] pointer-events-none px-2" value={count} readOnly tabIndex={-1}></input>
 				<button type="button" id="inc-btn1" className="flex-none w-32 ml-10">
 					<Image src={src} alt={alt ?? ""} width={500} height={500} onClick={() => change(1)} className="button-image" />
 				</button>

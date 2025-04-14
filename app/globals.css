@@ -7,8 +7,8 @@ body {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: #2b2b2b;
-	color: #FFFFFF;
+	background-color: #ffff00;
+	color: #000;
 }
 
 .container {
@@ -20,8 +20,8 @@ body {
 
 /* Header Styles */
 header {
-	background: #333;
-	color: #ffffff;
+	background: #aaaa00;
+	color: #000;
 	padding: 15px 0;
 	text-align: center;
 }
@@ -41,7 +41,7 @@ header h1 {
 
 /* Navigation Styles */
 nav.selection-panel {
-	background: #444;
+	background: #ffdb94;
 	padding: 10px 0;
 	text-align: center;
 	z-index: 1;
@@ -59,7 +59,7 @@ nav.selection-panel ul li {
 }
 
 nav.selection-panel ul li a {
-	color: #fff;
+	color: #000;
 	text-decoration: none;
 	font-size: 1.2em;
 }
@@ -75,12 +75,12 @@ section {
 
 section h2 {
 	text-align: center;
-	color: #ffffff;
+	color: #000;
 }
 
 section p {
 	text-align: center;
-	color: #ffffff;
+	color: #000;
 }
 
 ul {
@@ -94,7 +94,7 @@ ul li {
 }
 
 a {
-	color: #0066cc;
+	color: #000;
 }
 
 a:hover {
@@ -111,17 +111,17 @@ main section {
 
 main h2 {
 	font-size: 1.5em;
-	color: #ffffff;
+	color: #000;
 }
 
 main p {
-	color: #ffffff;
+	color: #000;
 }
 
 /* Footer Styles */
 footer {
-	background: #333;
-	color: #ffffff;
+	background: #aaaa00;
+	color: #000;
 	padding: 10px 0;
 	text-align: center;
 }
@@ -153,8 +153,8 @@ footer p {
 /* Subtraction Button Styles */
 .button-text {
 	font-size: 1.5em;
-	color: #fff; /* Text color is white */
-	background-color: #007bff; /* Same blue as the save button */
+	color: #000; /* Text color is white */
+	background-color: #ffdb94; /* Same blue as the save button */
 	border: none;
 	border-radius: 5px;
 	padding: 10px 20px;
@@ -173,13 +173,13 @@ footer p {
 }
 
 .real-drop-shadow {
-	background: linear-gradient(#007bff, 80%, color-mix(in srgb, #007bff, #000 20%));
+	background: linear-gradient(#ffdb94, 80%, color-mix(in srgb, #ffdb94, #000 20%));
 }
 
 .select-button {
 	font-size: 1.5em;
-	color: #fff; /* Text color is white */
-	background-color: #007bff; /* Same blue as the save button */
+	color: #000; /* Text color is white */
+	background-color: #ffdb94; /* Same blue as the save button */
 	transition: background-color 0.3s ease;
 	padding: 10px;
 	margin: 10px;
@@ -187,15 +187,15 @@ footer p {
 
 .select-option {
 	font-size: 1.5em;
-	color: #fff; /* Text color is white */
-	background-color: #007bff; /* Same blue as the save button */
+	color: #000; /* Text color is white */
+	background-color: #ffdb94; /* Same blue as the save button */
 	border: none;
 	transition: background-color 0.3s ease;
 	padding: 10px;
 }
 
 .select-option:hover {
-	background-color: #0056b3; /* Darker blue on hover */
+	background-color: #aaaa00; /* Darker blue on hover */
 }
 
 /* Button Container Styles */
@@ -219,19 +219,19 @@ footer p {
 /* Title Styles */
 .title {
 	font-size: 1.2em;
-	color: #ffffff;
+	color: #000;
 	margin-top: 10px; /* Space between counter and title */
 }
 .title-switch {
 	font-size: 1.2em;
-	color: #ffffff;
+	color: #000;
 	margin-right: 10px; /* Space between counter and title */
 }
 
 /* Counter Styles */
 .counter {
 	font-size: 3em;
-	color: #ffffff;
+	color: #000;
 	font-weight: bold;
 	width: auto;
 }
@@ -241,7 +241,7 @@ footer p {
 	margin-top: 20px;
 	padding: 10px 20px;
 	font-size: 1.2em;
-	color: #fff;
+	color: #000;
 	background-color: #007bff;
 	border: none;
 	border-radius: 5px;
@@ -270,7 +270,7 @@ footer p {
 
 .dropdown-button {
 	background-color: #007bff;
-	color: #fff;
+	color: #000;
 	border: none;
 	font-size: 1em;
 	cursor: pointer;
@@ -347,11 +347,11 @@ footer p {
 }
 
 input:checked + .slider {
-	background-color: #2196F3;
+	background-color: #ffdb94;
 }
 
 input:focus + .slider {
-	box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #ffdb94;
 }
 
 input:checked + .slider:before {
@@ -370,7 +370,7 @@ input:checked + .slider:before {
 }
 
 input {
-	background-color: #333333;
+	background-color: #ffdb94;
 }
 
 .notification {
@@ -386,7 +386,7 @@ input {
 .QRModal {
 	z-index: 100;
 	background-color: #333;
-	color: #FFF;
+	color: #000;
 }
 
 .QROverlay {
