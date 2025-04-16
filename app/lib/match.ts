@@ -93,4 +93,5 @@ export type state = {
 	"died": boolean,
 
 	"submitter_name": string,
+	"end_match_notes": string,
 }

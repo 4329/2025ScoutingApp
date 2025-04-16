@@ -373,6 +373,10 @@ input {
 	background-color: #333333;
 }
 
+textarea {
+	background-color: #333333;
+}
+
 .notification {
 	padding: 100px;
 	background-color: #a38b24;

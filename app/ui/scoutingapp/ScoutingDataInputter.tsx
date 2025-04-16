@@ -60,6 +60,10 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 				<CoolSwitch className="p-10" id="died" title="Demolished" initial={initialStates.died} />
 
 			</section>
+			
+			<div className="text-xl flex items-center">
+				End Match Notes: <textarea className="m-4 p-1" id="end_match_notes"/>
+			</div>
 		</>
 	)
 }

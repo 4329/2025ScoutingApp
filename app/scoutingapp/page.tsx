@@ -55,6 +55,8 @@ export default function ScoutingApp() {
 	const [initial, setInitial] = useState<state>({} as state);
 
 	const [name, setName] = useState<string>();
+
+
 	const [top, setTop] = useState<rankEntry[]>([])
 	useEffect(() => {
 		dataSource.getTop(name).then(setTop)
@@ -99,6 +101,7 @@ export default function ScoutingApp() {
 
 						"defense": 0,
 						"died": 0,
+						"end_match_notes": "",
 					} as unknown as state);
 					setTimeout(() => setInitial({} as state), 20);
 				}

@@ -64,7 +64,8 @@ export async function publish(toPublish: state) {
 			died,
 			defense,
 
-			submitter_name
+			submitter_name,
+			end_match_notes
 		)
 
 		VALUES (
@@ -98,7 +99,8 @@ export async function publish(toPublish: state) {
 			${sqled.died},
 			${sqled.defense},
 
-			${sqled.submitter_name}
+			${sqled.submitter_name},
+			${sqled.end_match_notes}
 		)
 		ON CONFLICT (event_name, match_num, team_num)
 		DO UPDATE SET 
@@ -132,7 +134,8 @@ export async function publish(toPublish: state) {
 			defense = EXCLUDED.defense,
 			died = EXCLUDED.died,
 
-			submitter_name = EXCLUDED.submitter_name
+			submitter_name = EXCLUDED.submitter_name,
+			end_match_notes = EXCLUDED.end_match_notes
 		`;
 	} catch (err) {
 		console.log(JSON.stringify(err));
