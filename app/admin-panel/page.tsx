@@ -14,8 +14,8 @@ export default function Page() {
     return (
         <>
             <header>
-                <h1>Roboteer Admin Panel</h1>
                 <NavPanel />
+                <h1>Roboteer Admin Panel</h1>
             </header>
             <h2 className="text-[40px] text-center m-10">Pull Data From TBA</h2>
             <MatthewsButton title="Pull Matches" toRun={populatePossibilitiesWithTBA}/>

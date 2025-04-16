@@ -46,7 +46,7 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 				<h2>Endgame</h2>
 
 				<div className="title mx-10">Climb</div>
-				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" name="Select Option" initial={(initialStates.endgame ?? "nothing").toString()}>
+				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" name="Select" initial={(initialStates.endgame ?? "nothing").toString()}>
 					<option value="nothing">Nothing</option>
 					<option value="park">Park</option>
 					<option value="shallow">Shallow Cage</option>
