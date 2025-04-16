@@ -9,8 +9,7 @@ export default async function Home() {
 	return (
 		<>
 			<header>
-				<h1>Lutheran Roboteers</h1>
-				<Image src="/4329.png" width={500} height={500} alt="Lutheran Roboteers Logo" className="logo" />
+
 				<NavPanel />
 			</header>
 			<nav className="selection-panel">
