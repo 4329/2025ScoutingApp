@@ -4,7 +4,8 @@
 
 /* General Styles */
 body {
-	font-family: Arial, sans-serif;
+    font-family: var(--font-tommorrow);
+	/* font-family: Arial, sans-serif; */
 	margin: 0;
 	padding: 0;
 	background-color: #2b2b2b;
@@ -27,6 +28,7 @@ header {
 }
 
 header h1 {
+    font-family: var(--font-revamped);
 	font-weight: bold;
 	margin: 0;
 	font-size: 2em;

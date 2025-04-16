@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Tomorrow } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 
-const inter = Tomorrow({weight: "300", subsets: ["latin"]});
+const tommorrow = Tomorrow({weight: "300", subsets: ["latin"], variable: "--font-tommorrow"});
+const revamped = localFont({src: "Revamped.woff2", variable: "--font-revamped"});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +18,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${tommorrow.variable} ${revamped.variable}`}>{children}</body>
     </html>
   );
 }

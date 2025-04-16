@@ -10,6 +10,7 @@ import ScoutingForm from "../ui/scoutingapp/ScoutingForm"
 import { DataSource, NetworkSource, NothingSource, rankEntry } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
 import { scoreToState, state, teams } from "../lib/match";
+import localFont from "next/font/local";
 
 export default function ScoutingApp() {
 
