@@ -10,8 +10,8 @@ export default async function Home() {
 		<>
 			<header>
 				<NavPanel />
-				<div className="flex justify-center">
-					<Image src="/4329.png" alt="4329" width="300" height="300" />
+				<div className="ml-[60px] flex justify-center">
+					<Image src="/4329.png" alt="4329" width="250" height="250" />
 				</div>
 			</header>
 			<nav className="selection-panel">
