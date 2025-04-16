@@ -28,7 +28,7 @@ export default async function Home() {
 				</div>
 				<h2>About Us</h2>
 
-				<p>The 4329 Lutheran Roboteers is one out of three FRC teams that include the word 'Lutheran' in their name. We expect all students to follow our vision through "The Roboteer Way" and treat others with respect and kindness even in a competitive atmosphere.
+				<p>The 4329 Lutheran Roboteers is one out of three FRC teams that include the word &apos;Lutheran&apos; in their name. We expect all students to follow our vision through &quot;The Roboteer Way&quot; and treat others with respect and kindness even in a competitive atmosphere.
 					<br></br>
 					<br></br>
 
@@ -37,7 +37,7 @@ export default async function Home() {
 					<br></br>
 
 
-					We aim to enhance every student's STEM skills through a variety of methods. These methods bring the focus to the quality of education for each individual student. One such method was exemplified when the Lutheran Roboteers helped incorporate Project Lead the Way engineering classes through our school, Lutheran High School of St. Charles. The Roboteer students helped write the grant for these resources and we got to be directly involved in creating more opportunities for students to expand their engineering skills and knowledge base. These classes then inspired students to join our team, making up over 10% of our school's population.  </p>
+					We aim to enhance every student&apos;s STEM skills through a variety of methods. These methods bring the focus to the quality of education for each individual student. One such method was exemplified when the Lutheran Roboteers helped incorporate Project Lead the Way engineering classes through our school, Lutheran High School of St. Charles. The Roboteer students helped write the grant for these resources and we got to be directly involved in creating more opportunities for students to expand their engineering skills and knowledge base. These classes then inspired students to join our team, making up over 10% of our school&apos;s population.  </p>
 			</section>
 
 			<section id="projects" className="container">
@@ -60,7 +60,7 @@ export default async function Home() {
 					<br></br>
 
 
-					A core member of our team is our ”spirit bot,” Lord Regendorf, otherwise known as Reggie! This robot was built in 2012 in an effort to create a robot that could interact with our audiences. Reggie accompanies us to almost every outreach event. He has been to over 100 outreach events throughout his lifetime. He can be seen in most of our School's football games, various organizations trunk-or-treats and fall fests we attend, airshows, state fairs, BMX events, golf tournaments, and when the Roboteers visit other schools!
+					A core member of our team is our &quot;spirit bot,&quot; Lord Regendorf, otherwise known as Reggie! This robot was built in 2012 in an effort to create a robot that could interact with our audiences. Reggie accompanies us to almost every outreach event. He has been to over 100 outreach events throughout his lifetime. He can be seen in most of our school&apos;s football games, various organizations trunk-or-treats and fall fests we attend, airshows, state fairs, BMX events, golf tournaments, and when the Roboteers visit other schools!
 					<br></br>
 					<br></br>
 
@@ -75,7 +75,7 @@ export default async function Home() {
 					<br></br>
 
 
-					Our team has a heart for serving in order to better our community around us. We reach around 10,000 people with our outreach initiatives and off-season events. We will continue to find ways to positively impact our communities while sharing the message of FIRST and strengthening our students' skillsets. </p>
+					Our team has a heart for serving in order to better our community around us. We reach around 10,000 people with our outreach initiatives and off-season events. We will continue to find ways to positively impact our communities while sharing the message of FIRST and strengthening our students&apos; skillsets. </p>
 			</section>
 
 			<section id="contact" className="container">
