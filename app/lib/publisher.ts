@@ -6,7 +6,7 @@ import { state, stateToScore } from "./match";
 function sumSection(state: state, sectionName: string): number {
 	let total = 0;
 	for (let key of Object.keys(state)) {
-		if (!["event_name", "match_num", "team_num", "is_red", "submitter_name"].includes(key) 
+		if (!["event_name", "match_num", "team_num", "is_red", "submitter_name", "end_match_notes"].includes(key) 
 			&& key.includes(sectionName) 
 			&& (state as any)[key]) {
 

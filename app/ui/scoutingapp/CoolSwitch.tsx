@@ -5,8 +5,8 @@ export default function CoolSwitch({ className, id, title, initial }: { classNam
 	const [isChecked, setIsChecked] = useState(false);
 
 	useEffect(() => {
-		if (initial) {
-			setIsChecked(initial as any != "false");
+		if (initial != undefined) {
+			setIsChecked(initial === true);
 		}
 	}, [initial])
 
