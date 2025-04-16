@@ -7,9 +7,9 @@ import Coralinator from "./Coralinator";
 import { state } from "@/app/lib/match";
 import { rankEntry } from "@/app/lib/dataSource";
 import { Table } from "./Table";
+import EndMatchNotes from "./EndMatchNotes";
 
 export function ScoutingDataInputter({initialStates, top, setName}: {initialStates: state, top: rankEntry[], setName: Dispatch<string | undefined>}) {
-	console.log("rended");
 	const [endgame, setEndgame] = useState("");
 	const [auto_corals, setAuto_corals] = useState([initialStates.auto_l1, initialStates.auto_l2, initialStates.auto_l3, initialStates.auto_l4]);
 	const [teleop_corals, setTeleop_corals] = useState([initialStates.teleop_l1, initialStates.teleop_l2, initialStates.teleop_l3, initialStates.teleop_l4]);
@@ -61,9 +61,7 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 
 			</section>
 			
-			<div className="text-xl flex items-center">
-				End Match Notes: <textarea className="m-4 p-1" id="end_match_notes"/>
-			</div>
+            <EndMatchNotes initial={initialStates.end_match_notes} />
 		</>
 	)
 }
