@@ -112,8 +112,8 @@ export default function ScoutingApp() {
 	return (
         <>
 			<header>
-				<h1 className="font-bold">4329 Scouting App</h1>
 				<NavPanel />
+				<h1 className="font-bold">4329 Scouting App</h1>
 			</header>
 			<nav className="selection-panel sticky top-0">
 				<ul>

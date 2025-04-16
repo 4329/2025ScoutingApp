@@ -37,7 +37,10 @@ export default function Qrcode() {
 
 	return (
 		<>
-			<NavPanel />
+			<header>
+				<NavPanel />
+				<h1>QrCode</h1>
+			</header>
 			<QRModal isOpen={showQR} close={() => setShowQR(false)} onScan={(result) => {
 				parseData(result[0].rawValue);
 				setShowQR(false);

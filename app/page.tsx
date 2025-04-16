@@ -9,8 +9,10 @@ export default async function Home() {
 	return (
 		<>
 			<header>
-
 				<NavPanel />
+				<div className="flex justify-center">
+					<Image src="/4329.png" alt="4329" width="500" height="500"/>
+				</div>
 			</header>
 			<nav className="selection-panel">
 				<ul>

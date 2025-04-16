@@ -10,8 +10,8 @@ export default function Page() {
     return (
         <>
             <header>
-                <h1>Login</h1>
                 <NavPanel />
+                <h1>Login</h1>
             </header>
             <form action={formAction}>
                 <div className="flex justify-center">
