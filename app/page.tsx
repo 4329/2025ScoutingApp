@@ -44,7 +44,7 @@ export default async function Home() {
 
 			<footer>
 				<div className="container">
-				<p>&copy; 2024 Lutheran Roboteers. All rights reserved.</p>
+				<p>&copy; 2025 Lutheran Roboteers. All rights reserved.</p>
 				</div>
 			</footer>
 		</>
