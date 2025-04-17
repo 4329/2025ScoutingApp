@@ -46,7 +46,7 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 				<h2>Endgame</h2>
 
 				<div className="title mx-10">Climb</div>
-				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" name="Select" initial={(initialStates.endgame ?? "nothing").toString()}>
+				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" oohh="!w-[350px]" name="Select" initial={(initialStates.endgame ?? "nothing").toString()}>
 					<option value="nothing">Nothing</option>
 					<option value="park">Park</option>
 					<option value="shallow">Shallow Cage</option>
@@ -72,5 +72,5 @@ function ImageSwitch({current}: {current: string}) {
 		["deep", "deep.jpg"],
 		["shallow", "shallow.jpg"],
 	]);
-	return <Image className="mx-10 mt-5" src={"/" + (src.get(current) ?? "cage.png")} alt="" width={300} height={300} />
+	return <Image className="mx-10 mt-5" src={"/" + (src.get(current) ?? "cage.png")} alt="" width={345} height={300} />
 }
