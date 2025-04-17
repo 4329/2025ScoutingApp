@@ -6,7 +6,7 @@ export default function NavPanel() {
     const leave = () => setTimeout(() => setBurger(false), 300);
 
     return (
-        <nav onMouseOut={() => {if (os == 'ios') leave();}} onBlur={leave} className={`relative z-10 ${burger ? "-mb-[276px] bg-[#333]" : "-mb-[60px]"} w-[300px]`}>
+        <nav onMouseOut={() => {if (navigator.userAgent == "iPhone") leave();}} onBlur={leave} className={`relative z-10 ${burger ? "-mb-[276px] bg-[#333]" : "-mb-[60px]"} w-[300px]`}>
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
             <button onClick={e => {
                 e.target.focus();
