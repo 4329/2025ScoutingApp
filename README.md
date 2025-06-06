@@ -145,7 +145,7 @@ const [valUseState, setUseState] = useState("");
   <option value="enumValueOne">Enum Value One</option>
   ...
 </Dropdown>
-<input type="hidden" id="matchperiod_enumkey" value={valUseState />
+<input type="hidden" id="matchperiod_enumkey" value={valUseState} />
 ```
 ## Notes
 The ScoutingApp uses a form, which loops over all input elements in order to determine values for publishing. You can use this principle in the creation of your own widgets. To have an input which is not published, set `name="hidden"`
