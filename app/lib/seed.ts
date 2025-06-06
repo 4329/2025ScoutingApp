@@ -80,14 +80,11 @@ export async function checkTables() {
 		);
 	`;
 
-    bcrypt.hash('0123', 12, async (error, hash) => {
-        await sql`
-            DO $$
-            BEGIN
-                IF NOT EXISTS (SELECT 1 FROM admins LIMIT 1) THEN
-                    INSERT INTO ADMINS (email, password) VALUES ('admin@admin', ${hash});
-                END IF;
-            END $$ LANGUAGE plpgsql;
-        `
-    });
+    const admincount = (await sql`SELECT * FROM admins`).rowCount
+	if (!admincount) {
+    	bcrypt.hash('0123', 12, async (error, hash) => {
+        	console.log(hash);
+			await sql`INSERT INTO admins (email, password) VALUES ('admin@admin', ${hash})`
+    	});
+	}
 }
