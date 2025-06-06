@@ -29,3 +29,123 @@ Now you can finally run
 npx vercel --prod
 ```
 This will create a production website, the link to which can be found on Vercel's dashboard, and shared with your team.
+# For a New Season
+With each new season, you will need to update the code to reflect that season's changes.
+## Database Layout
+Begin at [seed.ts](app/lib/seed.ts), under the sql query for matches. remove all keys beginning with auto_, teleop_, or endgame_.
+> [!TIP]
+> enum types are very useful in certain situations, like this example here
+> ```pgsql
+> DO $$ BEGIN
+>     CREATE TYPE endgame_style AS ENUM ( 'nothing', 'park', 'shallow', 'deep' );
+>   EXCEPTION
+>     WHEN duplicate_object THEN null;
+> END $$;
+> ```
+
+## Typescript
+Now, navigate to [match.ts](app.lib/match.ts) for type setup. the `State` type should accurately reflect the match table, so add proper types to coordinate that. Additionally, make sure to create matching typescript types for any custom ones you made using postgresql. 
+
+Next, go to `defaultState`, and add a default value for every key which you want to be reset when a new match is selected in the ScoutingApp.
+> [!WARNING]
+> Only add default keys which you wish to be reset when a new match is selected. Do not add a default value for match_num or team_num under any circumstances whatsoever.
+```typescript
+export const defaultState: any {
+  "key1": defaultValue1,
+  ...
+};
+```
+
+Now, `scores` should be updated, so that each key is matched with its score. You can find the proper number in this year's Game Manual
+```typescript
+const scores: Map<string, number> = new Map([
+  ["matchperiod_key1", scoreValue1],
+  ...
+])
+```
+### Custom Types and Booleans
+Custom types and booleans will require a special case in the methods transforming between state and score. For booleans, add the following code in `scoreToState`, and you are done.
+```typescript
+if (key == "machperiod_booleankey") return value == scores.get("matchperiod_booleankey");
+```
+With enums, this is rather more involved. First, create a map like so
+```typescript
+const enumScores: Map<string, number> = new Map({
+  ["enumVal1", scoreValue1],
+  ...
+});
+```
+Then, add the following in `scoreToState`
+```typescript
+if (key == "matchperiod_enumkey") {
+  for (let [k, v] of enumScores.entries()) {
+    if (v == value) return k;
+  }
+}
+```
+and in `stateToScore`
+```typescript
+if (key == "matchperiod_enumkey") return enumScores.get(value as string) ?? 0;
+```
+## Publishing
+Now, go to [publisher.ts](app/lib/publisher.ts). For any enums, ensure that their enum value rather than score is published by adding them to the top's declaration like this
+```typescript
+let sqled: any = {
+  matchPeriod_enumkey = toPublish.matchPeriod_enumkey,
+  ...
+};
+```
+and place their keys in the filter
+```typescript
+Object.entries(toPublish)
+  .filter(([k, _]) => !["matchPeriod_enumkey", ...].includes(k))
+  ...
+```
+
+
+Next will be the most tedious portion unless you are using vim, in which case there's a macro in a comment at the top of the file which you can shove into a register and run as many times as there are keys.
+
+For those who aren't cool, begin with the sql query `INSERT INTO matches (`, and copy over every key from the matches table declaration.
+
+Now, move to `VALUES (`, and write `${toPublish.key}` for every key from the matches table declaration.
+
+Lastly, go to `DO UPDATE SET`, and do `key = EXCLUDED.key` for every key from the matches table.
+
+Finished product should look something like
+```pgsql
+INSERT INTO matches (
+  key1,
+  ...
+)
+
+VALUES (
+  ${sqled.key1},
+  ...
+)
+
+ON CONFLICT(event_name, match_num, team_num)
+DO UPDATE SET
+  key1 = EXCLUDED.key1
+  ...
+```
+
+## ScoutingApp
+At last, you can update ScoutingApp. Go to [ScoutingDataInputter.tsx](app/ui/scoutingApp/ScoutingDataInputter.tsx). Use CoolSwitch for boolean values, and ImageCrementor for numberic ones.
+For each widget, set `id="matchperiod_key"`, and `initial={initialStates.matchperiod_key}`.
+```tsx
+<CoolSwitch id="matchperiod_booleankey" title="Boolean Key" initial={initialStates.matchperiod_booleankey} />
+<ImageCrementor id="matchperiod_numerickey" src="/image.jpg" title="Numeric Key" initial={initialStates.matchperiod_numerickey} />
+```
+### Enums
+With enums, create a dropdown, where each option has `value="enumVal"`. Then, add a useState to the top of the function, and give the dropdown `setMatchNum={setUseState}`. Then, add an input `type="hidden`, set its id, and do `value={valUseState}`.
+```tsx
+const [valUseState, setUseState] = useState("");
+...
+<Dropdown setMatchNum={setUseState} initial={(initialstates.matchperiod_enumkey ?? "defaultVal").toString()}>
+  <option value="enumValueOne">Enum Value One</option>
+  ...
+</Dropdown>
+<input type="hidden" id="matchperiod_enumkey" value={valUseState />
+```
+## Notes
+The ScoutingApp uses a form, which loops over all input elements in order to determine values for publishing. You can use this principle in the creation of your own widgets. To have an input which is not published, set `name="hidden"`
