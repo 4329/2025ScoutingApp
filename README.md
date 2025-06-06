@@ -1,11 +1,31 @@
-This is a [Next.js]     (https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-# Roboteers Scouting App
-  This is not not not not the website for 4329 Lutheran Roboteersu. It contains our scouting data along with 
-## Pages
-- <b>Home</b>: Contains basic links for everything, and is static enough to be a good starting place if you're just learning react
-- <b>Admin Panel</b>: pretty boring, but the sql queries are interesting if you haven't seen those before
-- <b>Scouting App</b>: fairly basic, a good starting place for the way that react components work
-- <b>Data Viewer</b>: rather complex, pretty annoying to change. Probably save this one for last
+# Quickstart
+install dependencies with  
+```
+npm i -f
+```
+create a Vercel account, then run
+```
+npx vercel link
+```
+Now, on the Vercel website, go to your dashboard and select the project you just linked with. Click on the storage tab, then create database. Select Neon.
+then, to finish all of the command line setup, run
+```
+npx vercel env pull
+npx auth secret
+```
+Now, run the website with
+```
+npm run dev
+```
+That command will output a url. When you open it for the first time, it will set up your database. Then, click on the hamburger menu at top left, and select admin panel. The default admin will have an email of admin@admin, and password of 0123.  
+Using the admin panel, you can enter a TheBlueAlliance event key, which will fill out the matches for your event.
+> [!TIP]
+> TheBlueAlliance tends to only fill out match schedules at the last minute, so you will likely have to do this at the event.
 
-## Backend
-&emsp;The backend is located inside of the lib folder. The seed file has a bunch of table declarations, which will be called only once when the app is first deployed. Changing these, then dropping the original table is the preferred way to alter a table. Publisher will also need to be changed, and is annoying enough that you should probably use a macro. Other files should hopefully not need to be changed.
+
+You can also add more admins, and doing so will delete the default one. Lastly, the check tables button simply rensures that your database is set up properly.
+Now you can finally run
+```
+npx vercel --prod
+```
+This will create a production website, the link to which can be found on Vercel's dashboard, and shared with your team.
