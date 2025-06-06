@@ -2,8 +2,9 @@
 import { useState } from "react";
 export default function NavPanel() {
     const [burger, setBurger] = useState(false);
-
-    const leave = () => setTimeout(() => setBurger(false), 300);
+    const leave = () => setTimeout(() => setBurger(true), 300);
+    
+    const baseItem = "block py-2 px-3 rounded-sm text-gray-400 hover:bg-gray-700 hover:text-white" 
 
     return (
         <nav onMouseOut={() => {if (navigator.userAgent == "iPhone") leave();}} onBlur={leave} className={`relative z-10 ${burger ? "-mb-[276px] bg-[#333]" : "-mb-[60px]"} w-[300px]`}>
@@ -20,16 +21,16 @@ export default function NavPanel() {
             <div className={`${burger ? "" : "hidden"} w-full`} id="navbar-hamburger">
               <ul className="flex flex-col font-medium mt-4 rounded-lg bg-[#333] dark:border-gray-700">
                 <li>
-                  <a href="/" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" aria-current="page">Home</a>
+                  <a href="/" className={`${baseItem}`}aria-current="page">Home</a>
                 </li>
                 <li>
-                  <a href="/scoutingapp" className="block py-2 px-3 rounded-sm text-white bg-[#444] hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">Scouting App</a>
+                  <a href="/scoutingapp" className="block py-2 px-3 rounded-sm text-white bg-[#444] hover:bg-gray-100">Scouting App</a>
                 </li>
                 <li>
-                  <a href="/qrcode" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white">QR Code Scanner</a>
+                  <a href="/qrcode" className={`${baseItem}`}>QR Code Scanner</a>
                 </li>
                 <li>
-                  <a href="/admin-panel" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Admin Panel</a>
+                  <a href="/admin-panel" className={`${baseItem}`}>Admin Panel</a>
                 </li>
               </ul>
             </div>
