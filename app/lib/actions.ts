@@ -34,7 +34,6 @@ export async function populatePossibilitiesWithTBA(eventkey: string) {
 
 export async function populateTeamsWithTBA(eventKey: string) {
     const data = await getTBAEventTeams(eventKey);
-	console.log(data);
     data.forEach(async (x) => {
         await sql`
             INSERT INTO teams (team_num)
@@ -44,31 +43,25 @@ export async function populateTeamsWithTBA(eventKey: string) {
 }
 
 export async function getAdmin(email: string) {
-	try {
-		let data = await sql`SELECT * FROM admins WHERE email=${email}`;
-		return data.rows[0];
-	} catch (err) {
-		console.log("failed to find admin");
-		throw err;
-	}
+    let data = await sql`SELECT * FROM admins WHERE email=${email}`;
+    return data.rows[0];
 }
 
 export async function createAdmin(email: string, password: string) {
+    const defaultAdmin = (await sql`
+        SELECT * FROM admins WHERE email = 'admin@admin'
+    `).rowCount;
+
+    if (defaultAdmin) {
+        await sql`DELETE FROM admins WHERE email = 'admin@admin'`
+    }
+
     bcrypt.hash(password, 12, async (error, hash) => {
         await sql`
             INSERT INTO admins (email, password)
             VALUES (${email}, ${hash})
         `;
     });
-}
-
-export type team = {
-    auto_speaker: string
-};
-
-const points: any = {
-    auto_leave: 2,
-	auto_processor: 0,
 }
 
 export async function getTeams(eventKey: string) {
@@ -78,13 +71,8 @@ export async function getTeams(eventKey: string) {
         Object.entries(match)
             .filter(x => !["event_name", "team_num", "match_num", "is_red", "submitter_name"].includes(x[0]))
             .forEach(x => {
-                teamData[match.team_num] ??= { total_score: 0, num_matches: 0 };
+                teamData[match.team_num] ??= {};
                 teamData[match.team_num][x[0]] = (teamData[match.team_num][x[0]] ?? 0) + (x[1] + 0);
-                teamData[match.team_num]["total_score"] += (x[1] + 0) * (points[x[0]] ?? 1);
-				if (x[0] == "trap") {
-					teamData[match.team_num]["num_matches"]++;
-					teamData[match.team_num]["average_score"] = teamData[match.team_num]["total_score"] / teamData[match.team_num]["num_matches"]
-				}
             });
     });
     return teamData;
@@ -95,7 +83,6 @@ export async function authenticate(state: boolean , initialState: void | undefin
         await signIn("credentials", initialState as unknown as SignInOptions);
         return false;
     } catch (err) {
-        console.error(err);
         if (err instanceof AuthError) return true;
         throw err;
     }

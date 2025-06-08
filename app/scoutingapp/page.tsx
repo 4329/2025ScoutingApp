@@ -9,7 +9,7 @@ import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import ScoutingForm from "../ui/scoutingapp/ScoutingForm"
 import { DataSource, NetworkSource, NothingSource, rankEntry } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
-import { scoreToState, state, teams } from "../lib/match";
+import { defaultState, scoreToState, state, teams } from "../lib/match";
 import localFont from "next/font/local";
 
 export default function ScoutingApp() {
@@ -77,33 +77,7 @@ export default function ScoutingApp() {
 						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
 					setInitial(x[0] as state);
 				} else {
-					setInitial({
-						"auto_leave": false,
-						"auto_l1": 0,
-						"auto_l2": 0,
-						"auto_l3": 0,
-						"auto_l4": 0,
-						"auto_processor": 0,
-						"auto_net": 0,
-						"auto_total": 0,
-
-						"teleop_l1": 0,
-						"teleop_l2": 0,
-						"teleop_l3": 0,
-						"teleop_l4": 0,
-						"teleop_processor": 0,
-						"teleop_net": 0,
-						"teleop_total": 0,
-
-						"endgame": 0,
-						"endgame_total": 0,
-
-						"match_total": 0,
-
-						"defense": 0,
-						"died": 0,
-						"end_match_notes": "",
-					} as unknown as state);
+					setInitial(defaultState as unknown as state);
 					setTimeout(() => setInitial({} as state), 20);
 				}
 			})

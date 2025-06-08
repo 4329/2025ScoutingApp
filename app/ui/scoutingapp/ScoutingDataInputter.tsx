@@ -53,10 +53,9 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 					<option value="deep">Deep Cage</option>
 				</Dropdown>
 				<input type="hidden" id="endgame" value={endgame} />
-				<div className="h-56" />
 				<ImageSwitch current={endgame} />
 
-				<CoolSwitch className="pt-10 pl-10" id="defense" title="Defence" initial={initialStates.defense} />
+				<CoolSwitch className="p-10" id="defense" title="Defence" initial={initialStates.defense} />
 				<CoolSwitch className="p-10" id="died" title="Demolished" initial={initialStates.died} />
 
 			</section>
