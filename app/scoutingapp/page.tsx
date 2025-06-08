@@ -22,9 +22,7 @@ export default function ScoutingApp() {
 
 	const [eventKey, setEventKey] = useState("");
 	useEffect(() => {
-		dataSource.getEvent().then((x: string) => {
-			 setEventKey(x);
-		});
+		dataSource.getEvent().then(setEventKey).catch(() => setDataSource(new NothingSource()));
 	}, [dataSource]);
 
 	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
@@ -60,9 +58,10 @@ export default function ScoutingApp() {
 
 	const [top, setTop] = useState<rankEntry[]>([])
 	useEffect(() => {
-		dataSource.getTop(name).then(setTop)
+        const doTop = () => dataSource.getTop(name).then(setTop).catch(() => setDataSource(new NothingSource()));
+        doTop();
 		const interval = setInterval(() => {
-			dataSource.getTop(name).then(setTop)
+            doTop();
 		}, 10000);
 
 		return () => clearInterval(interval);
@@ -104,7 +103,7 @@ export default function ScoutingApp() {
 			<div className="dropdown-container p-2 flex">
 				<div className="flex flex-col">
 					<div className="title mx-10">Match Num</div>
-					<Dropdown name="Match Number" setMatchNum={setMatchNum}>
+					<Dropdown name="Match Number" className="w-[300px]" setValue={setMatchNum}>
 						{matchState.map((x: QueryResultRow) => <option value={x.match_num} key={x.match_num}>{x.match_num}</option>)}
 					</Dropdown>
 				</div>
@@ -112,14 +111,13 @@ export default function ScoutingApp() {
 				<div className="flex flex-col">
 					<div className="title mx-10">Scouter Id</div>
 					<div className="flex items-center">
-						<Dropdown name="Scouter Id" setMatchNum={setScouterid}>
+						<Dropdown name="Scouter Id" className="w-[300px]" setValue={setScouterid}>
 							{[0, 1, 2, 3, 4, 5].map((_: number, i: number) => {
 								return <option value={i} key={i}>{i + 1}</option>
 							})}
 						</Dropdown>
-						{scouterid ?
+						{scouterid && teamNum != "undefined" &&
 							<div className="title !mt-9">{teamNum}</div>
-								: <></>
 						}
 					</div>
 				</div>
