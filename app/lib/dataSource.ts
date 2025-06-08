@@ -73,7 +73,7 @@ export class NothingSource implements DataSource {
     }
 
 	getEvent() {
-		return new Promise<string>((res, _) => res(""));
+		return new Promise<string>((res, _) => res("a"));
 	}
 
 	getTop() {

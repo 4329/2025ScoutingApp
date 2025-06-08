@@ -20,14 +20,16 @@ export function formAtData(e: any, eventKey: string, matchNum: string, teamNum: 
 
 			case "hidden":
             case "text":
-            case "textarea":
 				if (tmp[i].value == "") {
                     return tmp[i].id; // this is how I error
                 } else if (tmp[i].id == "hidden") {
                     break;
                 }
-			out[tmp[i].id] = tmp[i].value;
-			break;
+                out[tmp[i].id] = tmp[i].value;
+                break;
+            case "textarea":
+                out[tmp[i].id] = tmp[i].value;
+                break;
 		}
 	}
 

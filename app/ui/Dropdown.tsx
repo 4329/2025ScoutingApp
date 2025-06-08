@@ -1,7 +1,7 @@
 "use client"
 import { Dispatch, MouseEventHandler, MutableRefObject, ReactElement, SyntheticEvent, useEffect, useState } from "react";
 
-export default function Dropdown({ className, name, children, setMatchNum, rerender, initial, ah}: { className?: string, name: string, children?: Array<ReactElement<HTMLOptionElement>>, setMatchNum?: Dispatch<any>, rerender?: MutableRefObject<boolean>, initial?: string, ah?: number}) {
+export default function Dropdown({ className, name, children, setValue, rerender, initial, ah}: { className?: string, name: string, children?: Array<ReactElement<HTMLOptionElement>>, setValue?: Dispatch<any>, rerender?: MutableRefObject<boolean>, initial?: string, ah?: number}) {
 	const [dropped, setDropped]: [boolean, Dispatch<boolean>] = useState(false);
     let [disp, setDisp]: [string, Dispatch<string>] = useState(name);
 
@@ -10,7 +10,7 @@ export default function Dropdown({ className, name, children, setMatchNum, reren
 			let child = children[children.findIndex(x => x.props.value == initial)]
 			if (child) {
 				setDisp(child.props.children as any as string);
-				if (setMatchNum) setMatchNum(child.props.value);
+				if (setValue) setValue(child.props.value);
 			}
 		}
 	}, [initial]);
@@ -23,7 +23,7 @@ export default function Dropdown({ className, name, children, setMatchNum, reren
     function handleChange(event: SyntheticEvent) {
         const tmp: HTMLDivElement = event.target as HTMLDivElement;
 		setDisp(tmp.textContent + "");
-		if (setMatchNum != null) setMatchNum(tmp.id);
+		if (setValue != null) setValue(tmp.id);
 		
 		setDropped(false);
     }
@@ -36,10 +36,8 @@ export default function Dropdown({ className, name, children, setMatchNum, reren
 	return (
 		<div onBlur={handleBlur} className={`my-8 mr-8 relative -top-6 ${className}`}>
 			<button type="button" onClick={() => {setDropped(!dropped);}} className={`select-button w-full ${!dropped || children?.length == 0 ? "rounded-md" : "rounded-t-md"} border-gray-600`}>
-				<div id="box" className="flex space-x-4 content-center justify-between">
-					<p className="relative top-2">{disp}</p>
-					<Icon isOpen={dropped} ah={ah ?? 0} />
-				</div>
+                <Icon isOpen={dropped} ah={ah ?? 0} />
+                <div className="text-left text-nowrap">{disp}</div>
 			</button>
 			<OptionsContainer options={children} handleChange={handleChange} dropped={dropped} />
 		</div>
@@ -69,7 +67,7 @@ function OptionsContainer({options, handleChange, dropped}: {options?: Array<Rea
 
 function Icon({ isOpen, ah }: { isOpen: boolean, ah: number }) {
 	return  (
-		<div className={`shrink m-4 relative right-0`}>
+		<div className={`shrink m-4 absolute -right-4 top-[10px]`}>
 			<svg viewBox="0 0 24 24" width="25" height="25" stroke="#FFFFFF" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" className={`${isOpen ? 'translate' : ''}`}>
 				{isOpen ? 
 					<polyline points="6 15 12 9 18 15"></polyline>
