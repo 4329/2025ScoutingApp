@@ -95,3 +95,31 @@ export type state = {
 	"submitter_name": string,
 	"end_match_notes": string,
 }
+
+export const defaultState: any = {
+    "auto_leave": false,
+    "auto_l1": 0,
+    "auto_l2": 0,
+    "auto_l3": 0,
+    "auto_l4": 0,
+    "auto_processor": 0,
+    "auto_net": 0,
+    "auto_total": 0,
+
+    "teleop_l1": 0,
+    "teleop_l2": 0,
+    "teleop_l3": 0,
+    "teleop_l4": 0,
+    "teleop_processor": 0,
+    "teleop_net": 0,
+    "teleop_total": 0,
+
+    "endgame": 0,
+    "endgame_total": 0,
+
+    "match_total": 0,
+
+    "defense": 0,
+    "died": 0,
+    "end_match_notes": "",
+}
