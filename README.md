@@ -179,7 +179,7 @@ DO UPDATE SET
 ```
 
 ## ScoutingApp
-At last, you can update ScoutingApp. Go to [ScoutingDataInputter.tsx](app/ui/scoutingApp/ScoutingDataInputter.tsx). Use CoolSwitch for boolean values, and ImageCrementor for numberic ones.
+At last, you can update ScoutingApp. Go to [ScoutingDataInputter.tsx](app/ui/scoutingApp/ScoutingDataInputter.tsx). Use CoolSwitch for boolean values, and ImageCrementor for numeric ones.
 For each widget, set `id="key"`, and `initial={initialStates.key}`.
 ```tsx
 <CoolSwitch id="booleankey" title="Boolean Key" initial={initialStates.booleankey} />
