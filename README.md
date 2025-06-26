@@ -113,7 +113,7 @@ const scores: Map<string, number> = new Map([
 ])
 ```
 ### Custom Types and Booleans
-Custom types and booleans will require a special case in the methods transforming between state and score. For booleans, add the following code in `scoreToState`, and you are done.
+Custom types and booleans will require a special case in the methods transforming between state and score. Remove all special cases from last season. Then, for booleans, add the following code in `scoreToState`.
 ```typescript
 if (key == "booleankey") return value == scores.get("booleankey");
 ```
@@ -137,7 +137,7 @@ and in `stateToScore`
 if (key == "enumkey") return enumScores.get(value as string) ?? 0;
 ```
 ## Publishing
-Now, go to [publisher.ts](app/lib/publisher.ts). For any enums, ensure that their enum value rather than score is published by adding them to the top's declaration like this
+Now, go to [publisher.ts](app/lib/publisher.ts). Remember to remove the code from last season. For any enums, ensure that their enum value rather than score is published by adding them to the top's declaration like this.
 ```typescript
 let sqled: any = {
   enumkey = toPublish.enumkey,
