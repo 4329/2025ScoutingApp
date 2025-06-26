@@ -64,10 +64,10 @@ CREATE TABLE IF NOT EXISTS matches (
 );
 ```
 > [!TIP]
-> enum types are very useful in certain situations, like this example here
+> enum types are very useful in certain situations. They must be placed before the matches query, and formatted like this
 > ```pgsql
 > DO $$ BEGIN
->     CREATE TYPE endgame_style AS ENUM ( 'nothing', 'park', 'shallow', 'deep' );
+>     CREATE TYPE enum_name AS ENUM ( 'key1', ... );
 >   EXCEPTION
 >     WHEN duplicate_object THEN null;
 > END $$;
