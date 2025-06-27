@@ -1,5 +1,3 @@
-import { number, string } from "zod";
-
 export type teams = {
 	blue_nums: number[],
 	red_nums: number[]

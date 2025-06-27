@@ -11,10 +11,6 @@ export async function getAllPossibilities() {
 	return (await sql`SELECT match_num, possibilities.red_nums, possibilities.blue_nums FROM possibilities`).rows;
 }
 
-export async function getMatches(eventKey: string) {
-	return (await sql`SELECT * FROM matches WHERE event_name = ${eventKey}`).rows;
-}
-
 export async function getMatchPossibilities(eventKey: string) {
 	const out = await sql`SELECT match_num FROM possibilities WHERE event_name = ${eventKey}`;
 	return out.rows;

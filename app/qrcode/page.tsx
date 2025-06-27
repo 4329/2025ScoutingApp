@@ -53,11 +53,11 @@ export default function Qrcode() {
 
 			{/* Dropdown Menus */}
 			<div className="dropdown-container p-2 flex">
-				<Dropdown name="Match Number" setMatchNum={setMatchState} rerender={rerender}>
+				<Dropdown name="Match Number" setValue={setMatchState} rerender={rerender}>
 					{Object.keys(qrData).map(x => <option value={x} key={x}>{x}</option>)}
 				</Dropdown>
 
-				<Dropdown name="Team Number" setMatchNum={setTeamState} rerender={rerender2}>
+				<Dropdown name="Team Number" setValue={setTeamState} rerender={rerender2}>
 					{Object.keys(qrData[matchState] ?? {}).map((x: string) => {
 						return <option value={x} key={x}>{x}</option>
 					})}

@@ -142,31 +142,3 @@ export async function publish(toPublish: state) {
 		throw err;
    }
 }
-
-export async function publishTeams(toPublish: string[]) {
-	await sql`
-		INSERT INTO teams (
-			team_num,
-			team_name,
-			team_location,
-			drive_type,
-			ranking_points,
-			coop_point
-		)
-		VALUES (
-			${toPublish[0]},
-			${toPublish[1]},
-			${toPublish[2]},
-			${toPublish[3]},
-			${toPublish[4]},
-			${toPublish[5]}
-		)
-		ON CONFLICT (team_num)
-		DO UPDATE SET team_num = EXCLUDED.team_num,
-			team_name = EXCLUDED.team_name,
-			team_location = EXCLUDED.team_location,
-			drive_type = EXCLUDED.drive_type,
-			ranking_points = EXCLUDED.ranking_points,
-			coop_point = EXCLUDED.coop_point
-	`;
-}

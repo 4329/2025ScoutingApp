@@ -62,17 +62,6 @@ export async function checkTables() {
         );
     `;
 
-    await sql `
-        CREATE TABLE IF NOT EXISTS teams (
-            team_num int UNIQUE,
-			team_name text,
-			team_location text,
-			drive_type text,
-			ranking_points int,
-			coop_points int
-        );
-    `;
-
 	await sql`
 		CREATE TABLE IF NOT EXISTS admins (
 			email text UNIQUE,

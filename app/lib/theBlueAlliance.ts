@@ -9,10 +9,6 @@ export async function getTBAMatchData(eventkey: string) {
     });
 }
 
-export async function getTBAEventTeams(eventKey: string) {
-    return await getTBA(`https://www.thebluealliance.com/api/v3/event/${eventKey}/teams`);
-}
-
 async function getTBA(url: string) {
     let data: any[] = await fetch(`${url}`, {
         method: "GET",
@@ -23,5 +19,4 @@ async function getTBA(url: string) {
         }
     }).then((res) => res.json());
     return data;
-
 }

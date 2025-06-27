@@ -2,11 +2,9 @@
 
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt"
-import { getTBAEventTeams, getTBAMatchData } from "./theBlueAlliance";
-import { getMatches, getMatchPossibilities } from "./getter";
+import { getTBAMatchData } from "./theBlueAlliance";
 import { signIn } from "@/auth";
 import { SignInOptions } from "next-auth/react";
-import { revalidatePath } from "next/cache";
 import { AuthError } from "next-auth";
 import { checkTables } from "./seed";
 
@@ -32,16 +30,6 @@ export async function populatePossibilitiesWithTBA(eventkey: string) {
     });
 }
 
-export async function populateTeamsWithTBA(eventKey: string) {
-    const data = await getTBAEventTeams(eventKey);
-    data.forEach(async (x) => {
-        await sql`
-            INSERT INTO teams (team_num)
-            VALUES (${x.team_number})
-        `;
-    })
-}
-
 export async function getAdmin(email: string) {
     let data = await sql`SELECT * FROM admins WHERE email=${email}`;
     return data.rows[0];
@@ -56,7 +44,7 @@ export async function createAdmin(email: string, password: string) {
         await sql`DELETE FROM admins WHERE email = 'admin@admin'`
     }
 
-    bcrypt.hash(password, 12, async (error, hash) => {
+    bcrypt.hash(password, 12, async (_error, hash) => {
         await sql`
             INSERT INTO admins (email, password)
             VALUES (${email}, ${hash})
@@ -64,21 +52,7 @@ export async function createAdmin(email: string, password: string) {
     });
 }
 
-export async function getTeams(eventKey: string) {
-    const data = await getMatches(eventKey);
-    const teamData: any = { };
-    data.forEach((match) => {
-        Object.entries(match)
-            .filter(x => !["event_name", "team_num", "match_num", "is_red", "submitter_name"].includes(x[0]))
-            .forEach(x => {
-                teamData[match.team_num] ??= {};
-                teamData[match.team_num][x[0]] = (teamData[match.team_num][x[0]] ?? 0) + (x[1] + 0);
-            });
-    });
-    return teamData;
-}
-
-export async function authenticate(state: boolean , initialState: void | undefined) {
+export async function authenticate(_state: boolean, initialState: void | undefined) {
     try {
         await signIn("credentials", initialState as unknown as SignInOptions);
         return false;
