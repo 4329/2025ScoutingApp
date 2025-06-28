@@ -2,14 +2,11 @@
 import { signOut } from "next-auth/react";
 import MatthewsButton from "../ui/admin-panel/MatthewsButton";
 import NavPanel from "../ui/NavPanel";
-import { revalidatePath } from "next/cache";
-import { createAdmin, populatePossibilitiesWithTBA, populateTeamsWithTBA } from "../lib/actions";
-import { SyntheticEvent, useState } from "react";
+import { createAdmin, populatePossibilitiesWithTBA } from "../lib/actions";
+import { SyntheticEvent } from "react";
 import { checkTables } from "../lib/seed";
 
 export default function Page() {
-
-	const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <>

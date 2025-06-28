@@ -1,7 +1,7 @@
 "use client"
 import { Dispatch, MouseEventHandler, MutableRefObject, ReactElement, SyntheticEvent, useEffect, useState } from "react";
 
-export default function Dropdown({ className, name, children, setMatchNum, rerender, initial, oohh}: { className?: string, name: string, children?: Array<ReactElement<HTMLOptionElement>>, setMatchNum?: Dispatch<any>, rerender?: MutableRefObject<boolean>, initial?: string, oohh?: string}) {
+export default function Dropdown({ className, name, children, setValue: setMatchNum, rerender, initial, oohh}: { className?: string, name: string, children?: Array<ReactElement<HTMLOptionElement>>, setValue?: Dispatch<any>, rerender?: MutableRefObject<boolean>, initial?: string, oohh?: string}) {
 	const [dropped, setDropped]: [boolean, Dispatch<boolean>] = useState(false);
     let [disp, setDisp]: [string, Dispatch<string>] = useState(name);
 
@@ -48,12 +48,12 @@ export default function Dropdown({ className, name, children, setMatchNum, reren
 
 function OptionsContainer({options, handleChange, dropped}: {options?: Array<ReactElement<HTMLOptionElement>>, handleChange: MouseEventHandler<HTMLDivElement>, dropped: boolean}) {
 	return (
-			<div id="options-container" className="my-[-300px] relative top-[300px] left-[10px] z-10">
+			<div id="options-container" className="absolute left-[10px] z-10 w-full">
 			{
 				dropped && options && options.length > 0 && (
 					<>
-						<div id="drop-shadows-are-stupid" className="real-drop-shadow h-2 w-[300px] relative -top-4"></div>
-						<div id="options-window" className="overflow-auto h-[335px] w-[300px] rounded-b-md relative -top-4">
+						<div id="drop-shadows-are-stupid" className="real-drop-shadow h-2 relative -top-4"></div>
+						<div id="options-window" className="overflow-auto h-[335px] w-full rounded-b-md relative -top-4">
 							{options ? options.map((option: any) => (
 									<div onClick={handleChange} id={option.props.value} key={option.props.value} className={`select-option`} >
 										{option.props.children}

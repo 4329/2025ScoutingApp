@@ -9,7 +9,7 @@ import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import ScoutingForm from "../ui/scoutingapp/ScoutingForm"
 import { DataSource, NetworkSource, NothingSource, rankEntry } from "../lib/dataSource";
 import Possibilities from "../ui/scoutingapp/Possibilities";
-import { scoreToState, state, teams } from "../lib/match";
+import { defaultState, scoreToState, state, teams } from "../lib/match";
 import localFont from "next/font/local";
 
 export default function ScoutingApp() {
@@ -22,9 +22,7 @@ export default function ScoutingApp() {
 
 	const [eventKey, setEventKey] = useState("");
 	useEffect(() => {
-		dataSource.getEvent().then((x: string) => {
-			 setEventKey(x);
-		});
+		dataSource.getEvent().then(setEventKey).catch(() => setDataSource(new NothingSource()));
 	}, [dataSource]);
 
 	const [matchState, setMatchState] = useState<QueryResultRow[]>([]);
@@ -60,9 +58,10 @@ export default function ScoutingApp() {
 
 	const [top, setTop] = useState<rankEntry[]>([])
 	useEffect(() => {
-		dataSource.getTop(name).then(setTop)
+        const doTop = () => dataSource.getTop(name).then(setTop).catch(() => setDataSource(new NothingSource()));
+        doTop();
 		const interval = setInterval(() => {
-			dataSource.getTop(name).then(setTop)
+            doTop();
 		}, 10000);
 
 		return () => clearInterval(interval);
@@ -77,33 +76,7 @@ export default function ScoutingApp() {
 						.forEach(y => x[0][y] = scoreToState(y, x[0][y]));
 					setInitial(x[0] as state);
 				} else {
-					setInitial({
-						"auto_leave": false,
-						"auto_l1": 0,
-						"auto_l2": 0,
-						"auto_l3": 0,
-						"auto_l4": 0,
-						"auto_processor": 0,
-						"auto_net": 0,
-						"auto_total": 0,
-
-						"teleop_l1": 0,
-						"teleop_l2": 0,
-						"teleop_l3": 0,
-						"teleop_l4": 0,
-						"teleop_processor": 0,
-						"teleop_net": 0,
-						"teleop_total": 0,
-
-						"endgame": 0,
-						"endgame_total": 0,
-
-						"match_total": 0,
-
-						"defense": 0,
-						"died": 0,
-						"end_match_notes": "",
-					} as unknown as state);
+					setInitial(defaultState as unknown as state);
 					setTimeout(() => setInitial({} as state), 20);
 				}
 			})
@@ -130,7 +103,7 @@ export default function ScoutingApp() {
 			<div className="dropdown-container p-2 flex">
 				<div className="flex flex-col">
 					<div className="title mx-10">Match Num</div>
-					<Dropdown name="Match Number" setMatchNum={setMatchNum}>
+					<Dropdown name="Match Number" className="w-[300px]" setValue={setMatchNum}>
 						{matchState.map((x: QueryResultRow) => <option value={x.match_num} key={x.match_num}>{x.match_num}</option>)}
 					</Dropdown>
 				</div>
@@ -138,14 +111,13 @@ export default function ScoutingApp() {
 				<div className="flex flex-col">
 					<div className="title mx-10">Scouter Id</div>
 					<div className="flex items-center">
-						<Dropdown name="Scouter Id" setMatchNum={setScouterid}>
+						<Dropdown name="Scouter Id" className="w-[300px]" setValue={setScouterid}>
 							{[0, 1, 2, 3, 4, 5].map((_: number, i: number) => {
 								return <option value={i} key={i}>{i + 1}</option>
 							})}
 						</Dropdown>
-						{scouterid ?
+						{scouterid && teamNum != "undefined" &&
 							<div className="title !mt-9">{teamNum}</div>
-								: <></>
 						}
 					</div>
 				</div>

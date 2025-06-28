@@ -46,17 +46,16 @@ export function ScoutingDataInputter({initialStates, top, setName}: {initialStat
 				<h2>Endgame</h2>
 
 				<div className="title mx-10">Climb</div>
-				<Dropdown setMatchNum={setEndgame} className="relative -top-28 m-7" oohh="!w-[350px]" name="Select" initial={(initialStates.endgame ?? "nothing").toString()}>
+				<Dropdown setValue={setEndgame} className="relative -top-28 m-7" oohh="!w-[350px]" name="Select" initial={(initialStates.endgame ?? "nothing").toString()}>
 					<option value="nothing">Nothing</option>
 					<option value="park">Park</option>
 					<option value="shallow">Shallow Cage</option>
 					<option value="deep">Deep Cage</option>
 				</Dropdown>
 				<input type="hidden" id="endgame" value={endgame} />
-				<div className="h-56" />
 				<ImageSwitch current={endgame} />
 
-				<CoolSwitch className="pt-10 pl-10" id="defense" title="Defence" initial={initialStates.defense} />
+				<CoolSwitch className="p-10" id="defense" title="Defence" initial={initialStates.defense} />
 				<CoolSwitch className="p-10" id="died" title="Demolished" initial={initialStates.died} />
 
 			</section>
